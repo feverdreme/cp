@@ -89,10 +89,5 @@ vs ssplit(string s, char delim){
 
 int main() {
 
-	ui n = 16;
-	ui *ptr = &n;
-	*ptr = 4294967297;
-	cout << n;
-
 	return 0;
 }
