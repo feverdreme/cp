@@ -38,11 +38,19 @@ typedef pair<z,z> pzz;
 #define vec vector
 #define pub push_back
 #define pob pop_back
+#define tup tuple
+#define mp make_pair
+#define mt make_tuple
+#define get(i,x) get<i>(x)
+#define fir first
+#define sec second
 
 //iterators
-#define rep(i,a) for(int i=0; i<a;i++)
+#define rep(a) for(int i=0; i<a;i++)
 #define range(i,a,b) for(int i=a;a<b;i++)
 #define fori(i,iter) for(auto i:iter)
+
+#define f0r(i,a) for(int i = 0;i<a;i++)
 
 #define OE <<endl
 // #define cout cout<<
