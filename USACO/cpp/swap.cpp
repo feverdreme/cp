@@ -101,8 +101,9 @@ void reversearr(T arr[], int start, int end)
     }
 }
 
-int N,a1,a2,b1,b2;
+int N,a1,a2,b1,b2, MAXN = 101;
 long K;
+int arr[MAXN], darr[MAXN];
 
 int main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
@@ -110,7 +111,7 @@ int main() {
 	freopen("swap.out","w",stdout);
 	cin >> N >> K >> a1 >> a2 >> b1 >> b2;
 
-  int arr[N], darr[N];
+  // int arr[N], darr[N];
 	rep(i,N){
 		arr[i] = i+1;
 		darr[i] = i+1;

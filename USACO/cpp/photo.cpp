@@ -38,24 +38,22 @@ typedef pair<z,z> pzz;
 #define vec vector
 #define pub push_back
 #define pob pop_back
-#define tup tuple
-#define mp make_pair
-#define mt make_tuple
-#define get(i,x) get<i>(x)
-#define fir first
-#define sec second
 
 //iterators
-#define rep(a) for(int i=0; i<a;i++)
+#define rep(i,a) for(int i=0; i<a;i++)
 #define range(i,a,b) for(int i=a;a<b;i++)
 #define fori(i,iter) for(auto i:iter)
-
-#define f0r(i,a) for(int i = 0;i<a;i++)
 
 #define OE <<endl
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dvec(v) fori(i,v){cout << i OE;}
+
+void setIO(string io){
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	freopen((io + ".in").c_str(),"r",stdin);
+	freopen((io + ".out").c_str(),"w",stdout);
+}
 
 vi factors(int n){
 	vi factors;
@@ -96,6 +94,25 @@ vs ssplit(string s, char delim){
 }
 
 int main() {
+	setIO("photo");
+	cint(N);
+
+	int nums[N-1];
+	rep(i,N-1){
+		cin >> nums[i];
+	}
+
+	int used[N];
+	set<int> usedset;
+
+	range(i,1,N){
+		if (i == 1){
+			used[0] == i;
+			usedset.insert(i);
+		} else {
+			int newnum = nums[i]
+		}
+	}
 
 	return 0;
 }
