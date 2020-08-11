@@ -1,23 +1,4 @@
-#include <iostream>
-#include <cstdio>
-#include <sstream>
-#include <fstream>
-
-#include <vector>
-#include <array>
-#include <deque>
-#include <list>
-#include <map>
-#include <queue>
-#include <set>
-#include <stack>
-#include <vector>
-#include <algorithm>
-#include <bitset>
-#include <string>
-#include <tuple>
-#include <utility>
-#include <cmath>
+#include <bits/stdc++.h>
 
 using namespace std;
 
