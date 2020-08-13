@@ -41,11 +41,16 @@ typedef pair<z,z> pzz;
 #define tup tuple
 #define mp make_pair
 #define mt make_tuple
+#define get(i,x) get<i>(x)
+#define fir first
+#define sec second
 
 //iterators
 #define rep(a) for(int i=0; i<a;i++)
 #define range(i,a,b) for(int i=a;a<b;i++)
 #define fori(i,iter) for(auto i:iter)
+
+#define f0r(i,a) for(int i = 0;i<a;i++)
 
 #define OE <<endl
 // #define cout cout<<
@@ -90,34 +95,35 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int N, L;
-int wt,xt,dt;
-vec<tup<int,int,int>> pos;
-vi weights;
+int t,siz;
+int count = 0;
+char token;
+set<pii> mazepoints;
+
+void dfs(pii const &){
+	
+}
+
+void solve(){
+	cin >> siz;
+	int count = 0;
+	rep(siz*siz){
+		cin >> token;
+		int temp = round(log(i) / log(siz));
+		mazepoints.insert(mp(count, i % siz));
+		count++;
+	}
+	
+	//dfs
+	dfs(&mazepoints);
+
+}
 
 int main() {
-	freopen("meetings.in","r",stdin);
-	freopen("meetings.out","w",stdout);
-
-	cin >> N >> L;
-	rep(N){
-		cin >> wt >> xt >> dt;
-		// if (dt == -1) xt = L-xt;
-		pos.pub(mt(xt,dt,wt));
+	cin >> t;
+	while (t--){
+		solve();
 	}
-
-	vec<pii> fin[N];
-
-	sort(pos.begin(), pos.end());
-	// at the end, we wnat the pair<leftmostweight, leftmost -1> and pair<rightmost weight,rightmost 1> + time = dist
-	//so we need two sets, the ORDERD set of directions along with their dists pair<dist,dir>
-	//nad the ORDERED set of weights pair<weight>
-
-
-
-
-	//now both are teh same size
-	//we simply match left with -1 and right with 1
 
 
 	return 0;

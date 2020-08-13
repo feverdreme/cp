@@ -1,23 +1,4 @@
-#include <iostream>
-#include <cstdio>
-#include <sstream>
-#include <fstream>
-
-#include <vector>
-#include <array>
-#include <deque>
-#include <list>
-#include <map>
-#include <queue>
-#include <set>
-#include <stack>
-#include <vector>
-#include <algorithm>
-#include <bitset>
-#include <string>
-#include <tuple>
-#include <utility>
-#include <cmath>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -41,11 +22,16 @@ typedef pair<z,z> pzz;
 #define tup tuple
 #define mp make_pair
 #define mt make_tuple
+#define get(i,x) get<i>(x)
+#define fir first
+#define sec second
 
 //iterators
 #define rep(a) for(int i=0; i<a;i++)
 #define range(i,a,b) for(int i=a;a<b;i++)
 #define fori(i,iter) for(auto i:iter)
+
+#define f0r(i,a) for(int i = 0;i<a;i++)
 
 #define OE <<endl
 // #define cout cout<<
@@ -90,35 +76,28 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int N, L;
-int wt,xt,dt;
-vec<tup<int,int,int>> pos;
-vi weights;
+int N;
 
 int main() {
-	freopen("meetings.in","r",stdin);
-	freopen("meetings.out","w",stdout);
+    freopen("triangles.in","r",stdin);
+    freopen("triangles.out","w",stdout);
 
-	cin >> N >> L;
-	rep(N){
-		cin >> wt >> xt >> dt;
-		// if (dt == -1) xt = L-xt;
-		pos.pub(mt(xt,dt,wt));
-	}
+    cin >> N;
+    pii pointsX[N], pointsY[N];
+    int temp, temp2;
+    rep(N){
+        cin >> temp >> temp2;
+        pointsX[i] = mp(temp,temp2);
+        pointsY[i] = mp(temp2,temp);
+    }
+    sort(pointsX,pointsX+N);
+    sort(pointsY,pointsY+N);
 
-	vec<pii> fin[N];
-
-	sort(pos.begin(), pos.end());
-	// at the end, we wnat the pair<leftmostweight, leftmost -1> and pair<rightmost weight,rightmost 1> + time = dist
-	//so we need two sets, the ORDERD set of directions along with their dists pair<dist,dir>
-	//nad the ORDERED set of weights pair<weight>
-
-
-
-
-	//now both are teh same size
-	//we simply match left with -1 and right with 1
-
+    /*
+        so first we get the sorted,
+        for every point, we get the all the x's thats O(n), then we get all the Y's using a binary search
+        then we can just compute them
+    */
 
 	return 0;
 }

@@ -41,11 +41,16 @@ typedef pair<z,z> pzz;
 #define tup tuple
 #define mp make_pair
 #define mt make_tuple
+#define get(i,x) get<i>(x)
+#define fir first
+#define sec second
 
 //iterators
 #define rep(a) for(int i=0; i<a;i++)
 #define range(i,a,b) for(int i=a;a<b;i++)
 #define fori(i,iter) for(auto i:iter)
+
+#define f0r(i,a) for(int i = 0;i<a;i++)
 
 #define OE <<endl
 // #define cout cout<<
@@ -90,34 +95,41 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int N, L;
-int wt,xt,dt;
-vec<tup<int,int,int>> pos;
-vi weights;
+void setIO(string filename){
+    freopen((filename+".in").c_str(),"r",stdin);
+    freopen((filename+".out").c_str(),"w",stdout);
+}
+
+int N,K;
+vec<pii> nums;
 
 int main() {
-	freopen("meetings.in","r",stdin);
-	freopen("meetings.out","w",stdout);
+//    setIO("gymnastics");
+	freopen("gymnastics.in","r",stdin);
+	freopen("gymnastics.out","w",stdout);
 
-	cin >> N >> L;
-	rep(N){
-		cin >> wt >> xt >> dt;
-		// if (dt == -1) xt = L-xt;
-		pos.pub(mt(xt,dt,wt));
-	}
+    cin >> K >> N;
+    int session[N];
+    for(int j=0;j<K;j++){
+        rep(N){
+            cin >> session[i];
+        }
+        for (int p1=0; p1<N;p1++){
+            for (int p2=p1; p2<N;p2++){
+                if (p1 < p2) nums.pub(mp(session[p1] , session[p2]));
+            }
+        }
+    }
+    set<pii> distinct (nums.begin(),nums.end());
+	
+	int ret = 0;
+    fori(i,distinct){
+        if (count(nums.begin(),nums.end(),i) == K) ret++;
+    }
 
-	vec<pii> fin[N];
+    cout << ret;
+//cout << 1;
 
-	sort(pos.begin(), pos.end());
-	// at the end, we wnat the pair<leftmostweight, leftmost -1> and pair<rightmost weight,rightmost 1> + time = dist
-	//so we need two sets, the ORDERD set of directions along with their dists pair<dist,dir>
-	//nad the ORDERED set of weights pair<weight>
-
-
-
-
-	//now both are teh same size
-	//we simply match left with -1 and right with 1
 
 
 	return 0;

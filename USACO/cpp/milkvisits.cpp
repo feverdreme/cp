@@ -41,11 +41,20 @@ typedef pair<z,z> pzz;
 #define tup tuple
 #define mp make_pair
 #define mt make_tuple
+#define get(i,x) get<i>(x)
+#define fir first
+#define sec second
 
-//iterators
 #define rep(a) for(int i=0; i<a;i++)
 #define range(i,a,b) for(int i=a;a<b;i++)
 #define fori(i,iter) for(auto i:iter)
+#define FOR(i,a,b) for (int i = (a); i < (b); ++i)
+#define F0R(i,a) FOR(i,0,a)
+#define ROF(i,a,b) for (int i = (b)-1; i >= (a); --i)
+#define R0F(i,a) ROF(i,0,a)
+#define trav(a,x) for (auto& a: x)
+
+#define f0r(i,a) for(int i = 0;i<a;i++)
 
 #define OE <<endl
 // #define cout cout<<
@@ -90,34 +99,49 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int N, L;
-int wt,xt,dt;
-vec<tup<int,int,int>> pos;
-vi weights;
+int N,M;
+char cows[10001];
+//adjacency list
+vi adj[10001];
+
+//we create a set of sets of cows
+set<set<int>> groups;
+
+//generate all the groups
+set<int> traversed;
+set<int> untraversed;
+
+void dfs(int *node, set<int> *path){
+    //while theres an undiscovered element in the set
+    fori(pos,adj[*node]){
+        //if the node is not in the path and not in the traversed set
+
+    }
+}
 
 int main() {
-	freopen("meetings.in","r",stdin);
-	freopen("meetings.out","w",stdout);
+    freopen("milkvisits.in","r",stdin);
+    freopen("milkvisits.out","w",stdout);
 
-	cin >> N >> L;
-	rep(N){
-		cin >> wt >> xt >> dt;
-		// if (dt == -1) xt = L-xt;
-		pos.pub(mt(xt,dt,wt));
-	}
+    cin >> N >> M;
+    rep(N){
+        cin >> cows[i];
+    }
 
-	vec<pii> fin[N];
+    int a,b;
+    rep(N){
+        //add to the adjaceny list
+        cin >> a >> b;
+        adj[a].pub(b);
+        adj[b].pub(a);
+        untraversed.insert(i+1);
+    }
 
-	sort(pos.begin(), pos.end());
-	// at the end, we wnat the pair<leftmostweight, leftmost -1> and pair<rightmost weight,rightmost 1> + time = dist
-	//so we need two sets, the ORDERD set of directions along with their dists pair<dist,dir>
-	//nad the ORDERED set of weights pair<weight>
-
-
-
-
-	//now both are teh same size
-	//we simply match left with -1 and right with 1
+    //do the dfs with the set of elements
+    set<int> path;
+    while (traversed.size() != N){
+        dfs(traversed.begin(),&path);
+    }
 
 
 	return 0;
