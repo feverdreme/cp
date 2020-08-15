@@ -6,6 +6,7 @@ typedef long long z;
 typedef unsigned long long uz;
 typedef long l;
 typedef unsigned int ui;
+typedef double d;
 
 typedef vector<int> vi;
 typedef vector<z> vz;
@@ -34,7 +35,6 @@ typedef pair<z,z> pzz;
 #define FOR(i,a,b) for(int i=a;i<b;i++)
 
 #define OE <<endl
-#define space ' '
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dvec(v) fori(i,v){cout << i OE;}
@@ -77,7 +77,59 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int main() {
+int r,g,b,w;
 
+int nodd(int a, int b, int c, int d){
+	int numodd = 0;
+	if (a % 2) numodd++;
+	if (b%2) numodd++;
+	if (c%2) numodd++;
+	if (d%2) numodd++;
+
+	return numodd;
+}
+
+int oddthree(int a, int b, int c){
+	int numodd = 0;
+	if (a % 2) numodd++;
+	if (b%2) numodd++;
+	if (c%2) numodd++;
+
+	return numodd;
+}
+
+int main() {
+	int t;
+	cin >> t;
+	while(t--){
+		cin >> r >> g >> b >> w;
+
+		int res = nodd(r,g,b,w);
+		if (res <= 1){
+			cout << "Yes";
+		}
+		else if (r && g && b){
+			//theres a chance
+			switch (oddthree(r,g,b)) {
+				case 3:
+					cout << "Yes";
+					break;
+				case 2:
+					if (w%2) cout << "Yes";
+					else cout << "No";
+					break;
+				case 1:
+					if (w%2 == 0) cout << "Yes";
+					else cout << "No";
+					break;
+			}
+
+		} else {
+			cout << "No";
+		}
+		cout << endl;
+
+
+	}
 	return 0;
 }

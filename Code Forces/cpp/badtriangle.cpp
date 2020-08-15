@@ -77,7 +77,18 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int main() {
+int t, n;
+int a = 0, b = 0;
+int c = 0;
 
+int main() {
+	cin >> t;
+	while (t--){
+		cin >> n >> a >> b;
+		rep(n-2) cin >> c;
+		if (a + b <= c) cout << 1 << space << 2 << space << n << endl;
+		else cout << -1 << endl;
+		// cout << a << space << b << space << c << endl;
+	}
 	return 0;
 }

@@ -15,6 +15,8 @@ typedef vector<bool> vb;
 typedef pair<int,int> pii;
 typedef pair<z,z> pzz;
 
+typedef priority_queue<int, vector<int>, less<int> > max_heap;
+
 #define vec vector
 #define pub push_back
 #define pob pop_back
@@ -77,7 +79,75 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int main() {
+int r,g,b;
 
-	return 0;
+int main() {
+	cin >> r >> g >> b;
+	int totsiz = r + g + b;
+
+	vec<pair<int,char>> vr, vb, vg;
+
+	int token;
+	rep(r){
+		cin >> token;
+		vr.pub(mp(token,'r'));
+	}
+	rep(g){
+		cin >> token;
+		vg.pub(mp(token,'g'));
+	}
+	rep(b){
+		cin >> token;
+		vb.pub(mp(token,'b'));
+	}
+
+	sort(vr.begin(), vr.end(), greater<pair<int,char>>());
+	sort(vg.begin(), vg.end(), greater<pair<int,char>>());
+	sort(vb.begin(), vb.end(), greater<pair<int,char>>());
+
+	int totarea = 0;
+	int ms;
+	pair<int,char> ma;
+	int mf;
+
+	while (totsiz >= 2){
+		pair<int,char> m1 = vr.back(), m2 = vg.back(), m3 = vb.back();
+
+		ma = max(m1,m2,m3);
+
+		char ccolor = ma.sec;
+		mf = ma.fir;
+
+		switch(ccolor){
+			case 'r':
+				vr.pob();
+				if (m2.fir > m3.fir) {ms = m2.fir; vg.pob();}
+				else {ms = m3.fir; vb.pob();}
+
+				totarea += mf * ms;
+				totsiz -= 2;
+				break;
+			case 'g':
+				vg.pob();
+				if (m1.fir > m3.fir) {ms = m1.fir; vr.pob();}
+				else {ms = m3.fir; vb.pob();}
+
+				totarea += mf * ms;
+				totsiz -= 2;
+				break;
+			case 'b':
+				vb.pob();
+				if (m1.fir > m2.fir) {ms = m1.fir; vr.pob();}
+				else {ms = m2.fir; vg.pob();}
+
+				totarea += mf * ms;
+				totsiz -= 2;
+				break;
+		}
+	}
+
+	cout << totarea << endl;
+
+
+ 	return 0;
 }

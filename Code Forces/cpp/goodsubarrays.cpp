@@ -77,7 +77,14 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
+int t;
+int n;
+
 int main() {
+	rep(1e9){
+		cout << i << endl;
+	}
+
 
 	return 0;
 }

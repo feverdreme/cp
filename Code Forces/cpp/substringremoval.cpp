@@ -77,7 +77,59 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
+int t;
+string binstring;
+
+int findfirstone(string & str){
+	int ret = -1;
+	rep(str.length()){
+		if (str[i] == '1'){
+			ret = i;
+			break;
+		}
+	}
+	return ret;
+}
+
+pii findsmallestblock(string & binstr){
+	//the pii returns the pos and size
+	int firocc = findfirstone(binstr);
+	if (firocc != -1){
+		//proceed
+		vs blocks = ssplit(binstr, '0');
+		string maxele = *max_element(blocks.begin(), blocks.end());
+
+		int found = binstr.find(maxele);
+		return mp(found, maxele.length());
+
+
+	} else return mp(-1,-1);
+
+}
+
 int main() {
+	cin >> t;
+	while (t--){
+		cin >> binstring;
+
+		//greedy remove smallest block
+		int firstone =  findfirstone(binstring);
+		int aer = 0;
+		int turns = 0;
+		while (firstone != -1){
+			turns++;
+			pii possize  = findsmallestblock(binstring);
+			binstring.erase(possize.fir, possize.sec);
+
+			firstone = findfirstone(binstring);
+
+			if (turns % 2) aer += possize.sec;
+		}
+
+		cout << aer << endl;
+
+	}
+
 
 	return 0;
 }
