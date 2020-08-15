@@ -71,5 +71,20 @@ int main() {
 			ans += sz(rig);
 		} else rig.push(x[i]);
 	}
-	cout << ans << "\n";
+
+	vec<pii> fin[N];
+
+	sort(pos.begin(), pos.end());
+	// at the end, we wnat the pair<leftmostweight, leftmost -1> and pair<rightmost weight,rightmost 1> + time = dist
+	//so we need two sets, the ORDERD set of directions along with their dists pair<dist,dir>
+	//nad the ORDERED set of weights pair<weight>
+
+
+
+
+	//now both are teh same size
+	//we simply match left with -1 and right with 1
+
+
+	return 0;
 }
