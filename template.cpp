@@ -2,18 +2,15 @@
 
 using namespace std;
 
-typedef long long z;
-typedef unsigned long long uz;
-typedef long l;
+typedef long long ll;
+typedef unsigned long long ull;
 typedef unsigned int ui;
-
 typedef vector<int> vi;
-typedef vector<z> vz;
+typedef vector<ll> vll;
 typedef vector<string> vs;
 typedef vector<bool> vb;
-
 typedef pair<int,int> pii;
-typedef pair<z,z> pzz;
+typedef pair<ll,ll> pz;
 
 #define vec vector
 #define pub push_back
@@ -32,6 +29,8 @@ typedef pair<z,z> pzz;
 
 #define F0R(i,a) for(int i = 0;i<a;i++)
 #define FOR(i,a,b) for(int i=a;i<b;i++)
+#define ROF(i,a,b) for(int i=a;i>=b;i--)
+#define R0F(i,a,b) for(int i=a;i>=0;i--)
 
 #define OE <<endl
 #define space ' '
@@ -53,15 +52,10 @@ vi factors(int n){
 	return factors;
 }
 
-//python functions
 template<class T>
 vec<T> filter(vec<T> iter, T delim){
 	vec<T> ret;
-	fori (i,iter){
-		if (i != delim){
-			ret.pub(i);
-		}
-	}
+	fori (i,iter) if (i != delim) ret.pub(i);
 	return ret;
 }
 
@@ -70,9 +64,7 @@ vs ssplit(string s, char delim){
 	string token;
 	vs ret;
 
-	while(getline(ss,token,delim)){
-		ret.pub(token);
-	}
+	while(getline(ss,token,delim)) ret.pub(token);
 	ret = filter<string>(ret,"");
 	return ret;
 }

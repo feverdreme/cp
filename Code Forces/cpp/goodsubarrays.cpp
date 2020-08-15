@@ -30,8 +30,10 @@ typedef pair<z,z> pzz;
 #define range(i,a,b) for(int i=a;a<b;i++)
 #define fori(i,iter) for(auto i:iter)
 
-#define F0R(i,a) for(int i = 0;i<a;i++)
+#define F0R(i,a) for(int i=0;i<a;i++)
 #define FOR(i,a,b) for(int i=a;i<b;i++)
+#define ROF(i,a,b) for(int i=a;i>=b;i--)
+#define R0F(i,a,b) for(int i=a;i>=0;i--)
 
 #define OE <<endl
 #define space ' '
@@ -57,11 +59,7 @@ vi factors(int n){
 template<class T>
 vec<T> filter(vec<T> iter, T delim){
 	vec<T> ret;
-	fori (i,iter){
-		if (i != delim){
-			ret.pub(i);
-		}
-	}
+	fori (i,iter) if (i != delim) ret.pub(i);
 	return ret;
 }
 
