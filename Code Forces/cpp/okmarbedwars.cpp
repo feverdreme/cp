@@ -69,27 +69,51 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int t,N;
-vi arr;
+int t, N;
+string players;
+
+pii extend(int pos){
+	int lind = pos,rind = pos+1;
+
+	//first do lind
+	if (pos >= 2){
+		//you can just subtract
+		if (players[pos-1] == "R" && players[pos-2] == "L") lind = pos-1;
+	} else if (pos == 1){
+		if (players[pos-1] == "R" && players[N-1] == "L") lind = pos-1;
+	} else if (players[N-1] == "R" && players[N-2] == "L") lind = N-1;
+
+	//now do the rind
+	if (pos <= N-4){
+		if (players[pos+2] == "L" && players[pos+3] == "R") rind = pos+2;
+	} else if (pos == N-3){
+		if (players[pos+2] == "L" && players[0] == "R") rind = pos+2;
+	} else if (pos == N-2){
+		if (players[0] == "L" && players[1] == "R") rind = 0;
+	} else if (pos == N-1 && players[1] == "L" && players[2] == "R") rind = 1;
+
+	return mp(lind,rind);
+}
 
 int main() {
-  	cin >> t;
-    while(t--){
-				cin >> N;
-				arr.clear();
-    		rep(N){
-					int j;
-					cin >> j;
-					arr.pub(j);
-				}
-				set<int> nums (arr.begin(), arr.end());
-				if (nums.size() == 1){
-					cout << N << endl;
-				} else {
-					cout << 1 << endl;
-				}
-    }
+	cin >> t;
+	while (t--){
+		vec<pii> good;
 
+		cin >> N;
+		cin >> players;
+
+		if (count(players.begin(), players.end(), players[0]) == N){
+			cout << N / 2 << endl;
+			continue;
+		}
+
+		int pos = players.find("RL");
+		if (pos == -1) pos = N-1;
+
+		good.pub(extend(pos));
+
+	}
 
 	return 0;
 }

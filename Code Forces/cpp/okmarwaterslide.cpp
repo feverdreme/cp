@@ -69,27 +69,24 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int t,N;
-vi arr;
+int N;
+int arr[20006];
+int t;
 
 int main() {
-  	cin >> t;
-    while(t--){
-				cin >> N;
-				arr.clear();
-    		rep(N){
-					int j;
-					cin >> j;
-					arr.pub(j);
-				}
-				set<int> nums (arr.begin(), arr.end());
-				if (nums.size() == 1){
-					cout << N << endl;
-				} else {
-					cout << 1 << endl;
-				}
-    }
 
+	cin >> t;
+	while (t--){
+		int prev, j=0;
+		ll count = 0;
+		cin >> N >> prev;
+		rep(N-1){
+			cin >> j;
+			if (prev > j) count += prev-j;
+			prev = j;
+		}
+		cout << count << endl;
+	}
 
 	return 0;
 }
