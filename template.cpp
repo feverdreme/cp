@@ -30,13 +30,14 @@ typedef pair<ll,ll> pz;
 #define F0R(i,a) for(int i = 0;i<a;i++)
 #define FOR(i,a,b) for(int i=a;i<b;i++)
 #define ROF(i,a,b) for(int i=a;i>=b;i--)
-#define R0F(i,a,b) for(int i=a;i>=0;i--)
+#define R0F(i,a) for(int i=a;i>=0;i--)
 
 #define OE <<endl
 #define space ' '
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
-#define dvec(v) fori(i,v){cout << i OE;}
+#define dispbr(n) for(auto& i:n) cout<<i<<endl;
+#define disp(n) for(auto& i:n) cout<<i<<space
 
 vi factors(int n){
 	vi factors;
@@ -63,13 +64,13 @@ vs ssplit(string s, char delim){
 	stringstream ss(s);
 	string token;
 	vs ret;
-
 	while(getline(ss,token,delim)) ret.pub(token);
 	ret = filter<string>(ret,"");
 	return ret;
 }
 
 int main() {
+	
 
 	return 0;
 }

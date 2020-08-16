@@ -36,7 +36,8 @@ typedef pair<ll,ll> pz;
 #define space ' '
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
-#define dvec(v) fori(i,v){cout << i OE;}
+#define dispbr(n) for(auto& i:n) cout<<i<<endl;
+#define disp(n) for(auto& i:n) cout<<i<<space
 
 vi factors(int n){
 	vi factors;
@@ -69,47 +70,9 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int t,N;
-vi arr;
-
-bool removeAdj(vi &arr){
-    //check if there's non duplicates
-    unordered_set<int> nums (arr.begin(), arr.end());
-    
-    if (nums.size() == 1) return false;
-	vi erind;
-    int prev = arr[0];
-    FOR(i,1,N){
-        if (prev != arr[i]){
-            arr[i] += prev;
-            prev = arr[i];
-            erind.pub(i-1);
-        }
-    }
-    int numerased = 0;
-    fori(i,erind){
-    	arr.erase(arr.begin() + i - numerased);
-    	numerased++;
-	}
-	return true;
-
-}
-
+int t;
 int main() {
-    cin >> t;
-    while(t--){
-    	arr.clear();
-        cin >> N;
-        rep(N){
-			int j;
-			cin >> j;
-			arr.pub(j);
-		}
-
-        while (removeAdj(arr)){}
-        cout << arr.size() << endl;
-    }
-    
+    cout << 1;
 
 	return 0;
 }
