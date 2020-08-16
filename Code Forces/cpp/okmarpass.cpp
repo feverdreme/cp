@@ -70,7 +70,6 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int t;
 int main() {
     cout << 1;
 
