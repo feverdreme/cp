@@ -143,6 +143,7 @@ int main() {
 				totarea += mf * ms;
 				totsiz -= 2;
 				break;
+				
 		}
 	}
 
