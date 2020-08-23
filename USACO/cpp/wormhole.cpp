@@ -74,9 +74,36 @@ void setIO(string filename){
 	freopen((filename + ".out").c_str(), "r" , stdout);
 }
 
+int t;
+vector<pii> wormholes;
+int pairs[13];
+
+void recur(int &pairs, vec<vi> &perms, int t, set<int> upaired){
+	for (auto i: upaired)
+}
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
-	
+	freopen("wormhole.in","r",stdin);
+	// ofstream cout("wormhole.out");
+	cout << "Compiled" << endl;
+	cin >> t;
+
+	int temp1,temp2;
+	rep(t){
+		cin >> temp1 >> temp2;
+		wormholes.pub(mp(temp1,temp2));
+	}
+
+	// //recurse, pick ne for every one
+	set<int> upaired;
+	rep(t) upaired.insert(i+1);
+
+	vec<vi> perm;
+
+	// recur(upaired);
+
+	//now brute force
 	
 	return 0;
 }

@@ -71,12 +71,47 @@ vs ssplit(string s, char delim){
 
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
-	freopen((filename + ".out").c_str(), "r" , stdout);
+	freopen((filename + ".out").c_str(), "w" , stdout);
+}
+
+int countt = 0;
+int len;
+string par;
+
+void ok(int &c){
+	int num = 0;
+
+	FOR(i,0,len){
+		if (par[i] == '(') num++;
+		else {
+			if (num == 0) return;
+			else num--;
+		}
+	}
+
+	if (num == 0) c++;
 }
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+	setIO("typo");
 	
+	cin >> par;
+	len = par.size();
+
+	rep(len){
+		if (par[i] == '('){
+			par.replace(i,1,")");
+			ok(countt);
+			par.replace(i, 1, "(");
+		} else {
+			par.replace(i,1, "(");
+			ok(countt);
+			par.replace(i, 1, ")");
+		}
+	}
+
+	cout << countt;
 	
 	return 0;
 }
