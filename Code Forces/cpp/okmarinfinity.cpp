@@ -30,7 +30,7 @@ typedef pair<ll,ll> pz;
 #define F0R(i,a) for(int i = 0;i<a;i++)
 #define FOR(i,a,b) for(int i=a;i<b;i++)
 #define ROF(i,a,b) for(int i=a;i>=b;i--)
-#define R0F(i,a,b) for(int i=a;i>=0;i--)
+#define R0F(i,a) for(int i=a;i>=0;i--)
 
 #define OE <<endl
 #define space ' '
@@ -69,27 +69,53 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-int t,N;
-vi arr;
+int t, N;
+ll K;
 
 int main() {
-  	cin >> t;
-    while(t--){
-				cin >> N;
-				arr.clear();
-    		rep(N){
-					int j;
-					cin >> j;
-					arr.pub(j);
-				}
-				set<int> nums (arr.begin(), arr.end());
-				if (nums.size() == 1){
-					cout << N << endl;
-				} else {
-					cout << 1 << endl;
-				}
-    }
+	cin >> t;
 
+	while (t--){
+		cin >> N >> K;
+		int arr[N];
+		bool zex = false;
+		rep(N){
+			cin >> arr[i];
+		}
+
+		if (K == 0){
+			fori(i,arr) cout << i << space;
+			cout << endl;
+			continue;
+		}
+
+		int maxn = *max_element(arr,arr+N);
+
+		rep(N) arr[i] = maxn - arr[i];
+
+		if (K == 1) {
+			fori(i,arr) cout << i << space;
+			cout << endl;
+			continue;
+		} else if (K % 2 == 0) {
+			maxn = *max_element(arr, arr+N);
+			rep(N) arr[i] = maxn - arr[i];
+			fori(i,arr) cout << i << space;
+			cout << endl;
+			continue;
+		} else {
+			maxn = *max_element(arr, arr+N);
+			rep(N) arr[i] = maxn - arr[i];
+			maxn = *max_element(arr, arr+N);
+			rep(N) arr[i] = maxn - arr[i];
+
+			fori(i,arr) cout << i << space;
+			cout << endl;
+			continue;
+		}
+
+
+	}
 
 	return 0;
 }
