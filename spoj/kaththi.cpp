@@ -74,9 +74,53 @@ void setIO(string filename){
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
-int main() {
+int t, R, C;
+char token;
+char board[1000][1000];
+queue<pair<set<pair<int,int> >, pair<int, pair<int,int> > > > q;
+int maxnum = 0;
+
+def bfs(){
+	pair<set<pair<int, int>>, pair<int, pair<int, int>>> curr;
+	while (q.size())
+	{
+		curr = q.back();
+		q.pop();
+
+		//check if its at the end
+		if (curr.sec.sec = {R,C}){
+			maxnum = max(maxnum, curr.sec.fir);
+			continue ;
+		}
+
+		//add the 4 coords
+		//north
+		if (curr.sec.sec.fir < R && curr.fir.count({curr.sec.sec.fir + 1, curr.sec.sec.sec  })){
+			q.push()
+		}
+	}
+}
+
+int main()
+{
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 	
+	cin >> t;
+	while (t--){
+		cin >> R >> C;
+		range(i,0,R){
+			range(j,0,C){
+				cin >> token;
+				board[i][j] = token;
+			}
+		}
+
+		//run bfs
+		//path will be pair<set<int>, int>
+		//pair of pair of set of traversed and count and path
+		maxnum =0;
+		bfs(pair<set<pair<int, int>>, pair<int, pair<int, int>>>);
+	}
 	
 	return 0;
 }

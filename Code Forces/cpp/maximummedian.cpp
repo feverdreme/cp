@@ -74,9 +74,31 @@ void setIO(string filename){
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+int n;
+ll k, token;
+vi arr;
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
-	
+
+	cin >> n >> k;
+	rep(n){
+		cin >> token;
+		arr.push_back(token);
+	}
+	sort(arr.begin(), arr.end());
+
+	int mid = (n-1) / 2;
+	for (int i = mid; i < n-1; i++){
+		if ((arr[i+1] - arr[i]) * (i-mid+1) >= k ){
+			cout << arr[mid] + (k / (i-mid+1));
+			break;
+		} else {
+			k -= (arr[i+1] - arr[i]) * (i-mid+1);
+			arr[mid] += arr[i+1] - arr[i];
+			arr[i] = arr[i+1];
+		}
+	}
 	
 	return 0;
 }
