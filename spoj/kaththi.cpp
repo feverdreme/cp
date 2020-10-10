@@ -75,51 +75,119 @@ void setIO(string filename){
 }
 
 int t, R, C;
+int temp;
+//set of visited and unvisited nodes
 char token;
 char board[1000][1000];
-queue<pair<set<pair<int,int> >, pair<int, pair<int,int> > > > q;
-int maxnum = 0;
-
-def bfs(){
-	pair<set<pair<int, int>>, pair<int, pair<int, int>>> curr;
-	while (q.size())
-	{
-		curr = q.back();
-		q.pop();
-
-		//check if its at the end
-		if (curr.sec.sec = {R,C}){
-			maxnum = max(maxnum, curr.sec.fir);
-			continue ;
-		}
-
-		//add the 4 coords
-		//north
-		if (curr.sec.sec.fir < R && curr.fir.count({curr.sec.sec.fir + 1, curr.sec.sec.sec  })){
-			q.push()
-		}
-	}
-}
+set<pii> visited, unvisited;
+map<pii,int> weights;
 
 int main()
 {
-	std::ios_base::sync_with_stdio(false);cin.tie(0);
+	// std::ios_base::sync_with_stdio(false);cin.tie(0);
 	
 	cin >> t;
+	cout << "\nnee";
 	while (t--){
+		cout << "\nhere";
 		cin >> R >> C;
 		range(i,0,R){
 			range(j,0,C){
 				cin >> token;
 				board[i][j] = token;
+				unvisited.insert(mp(i,j));
+				weights.insert({mp(i,j), -1});
 			}
 		}
 
-		//run bfs
-		//path will be pair<set<int>, int>
-		//pair of pair of set of traversed and count and path
-		maxnum =0;
-		bfs(pair<set<pair<int, int>>, pair<int, pair<int, int>>>);
+		unvisited.erase(mp(0,0));
+		visited.insert(mp(0,0));
+
+		while(unvisited.size()){
+			pii minpoint;
+			int minscore = 1e9;
+			for (auto i : visited){
+				if (unvisited.find({i.fir+1, i.sec}) != unvisited.end()){
+					if (board[i.fir+1][i.sec] == board[i.fir][i.sec]){
+						
+						if (weights[{i.fir,i.sec}] < minscore){
+							minpoint = {i.fir + 1, i.sec};
+							minscore = weights[{i.fir, i.sec}] + weights[{i.fir + 1, i.sec}];
+						}
+
+					} else {
+						if (weights[{i.fir, i.sec}] + 1 < minscore)
+						{
+							minpoint = {i.fir + 1, i.sec};
+							minscore = weights[{i.fir, i.sec}] + weights[{i.fir + 1, i.sec}] + 1;
+						}
+					}
+				}
+				if (unvisited.find({i.fir, i.sec + 1}) != unvisited.end()){
+					if (board[i.fir][i.sec + 1] == board[i.fir][i.sec]){
+						
+						if (weights[{i.fir,i.sec}] < minscore){
+							minpoint = {i.fir , i.sec + 1};
+							minscore = weights[{i.fir, i.sec}] + weights[{i.fir , i.sec + 1}];
+						}
+
+					} else {
+						if (weights[{i.fir, i.sec}] + 1 < minscore)
+						{
+							minpoint = {i.fir , i.sec + 1};
+							minscore = weights[{i.fir, i.sec}] + weights[{i.fir, i.sec + 1}] + 1;
+						}
+					}
+				}
+				if (unvisited.find({i.fir - 1, i.sec}) != unvisited.end())
+				{
+					if (board[i.fir - 1][i.sec] == board[i.fir][i.sec])
+					{
+
+						if (weights[{i.fir, i.sec}] < minscore)
+						{
+							minpoint = {i.fir - 1, i.sec};
+							minscore = weights[{i.fir, i.sec}] + weights[{i.fir - 1, i.sec}];
+						}
+					}
+					else
+					{
+						if (weights[{i.fir, i.sec}] + 1 < minscore)
+						{
+							minpoint = {i.fir - 1, i.sec};
+							minscore = weights[{i.fir, i.sec}] + weights[{i.fir - 1, i.sec}] + 1;
+						}
+					}
+				}
+				if (unvisited.find({i.fir, i.sec - 1}) != unvisited.end())
+				{
+					if (board[i.fir][i.sec - 1] == board[i.fir][i.sec])
+					{
+
+						if (weights[{i.fir, i.sec}] < minscore)
+						{
+							minpoint = {i.fir, i.sec - 1};
+							minscore = weights[{i.fir, i.sec}] + weights[{i.fir, i.sec - 1}];
+						}
+					}
+					else
+					{
+						if (weights[{i.fir, i.sec}] + 1 < minscore)
+						{
+							minpoint = {i.fir, i.sec - 1};
+							minscore = weights[{i.fir, i.sec}] + weights[{i.fir, i.sec - 1}] + 1;
+						}
+					}
+				}
+			}
+
+			cout << minpoint.fir << ' ' << minpoint.sec << endl;
+			visited.insert(minpoint);
+			unvisited.erase(minpoint);
+			weights[minpoint] = minscore;
+		}
+
+		
 	}
 	
 	return 0;
