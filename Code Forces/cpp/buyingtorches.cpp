@@ -13,7 +13,6 @@ typedef pair<int,int> pii;
 typedef pair<ll,ll> pz;
 
 #define vec vector
-#define pb push_back
 #define pub push_back
 #define pob pop_back
 #define tup tuple
@@ -35,7 +34,6 @@ typedef pair<ll,ll> pz;
 
 #define OE <<endl
 #define space ' '
-#define elif else if
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
@@ -71,32 +69,32 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+ll t,x,y,k;
+
 int main() {
-	std::ios_base::sync_with_stdio(false);cin.tie(0);
+	// std::ios_base::sync_with_stdio(false);cin.tie(0);
+	
+	cin >> t;
+	vll  ans;
+	while(t--){
+		cin >> x >> y >> k;
+		x--;
 
+		ll divyk = ceil(1.0 * k / y);
+		ll divxk = ceil(1.0 * x / divxk);
+		ll divkx = ceil(1.0 * k/x);
+		ans.push_back(divyk + divxk + divkx);
+	}
 
+	cout << endl;
+	for( auto i: ans){
+		cout << i << endl;
+	}
+	
 	return 0;
 }

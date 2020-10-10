@@ -13,7 +13,6 @@ typedef pair<int,int> pii;
 typedef pair<ll,ll> pz;
 
 #define vec vector
-#define pb push_back
 #define pub push_back
 #define pob pop_back
 #define tup tuple
@@ -71,32 +70,35 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+int t,n;
+vi nums;
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+	
+	cin >> t;
+	while(t--){
+		cin >> n;
+		bool strdecr = true;
+		int token1, token2;
+		
+		cin >> token1;
 
+		rep(n-1){
+			cin >> token2;
 
+			if (token1 <= token2) strdecr = false;
+			token1 = token2;
+		}
+
+		if (strdecr) cout << "NO\n";
+		else cout << "YES\n";
+
+	}
+	
 	return 0;
 }

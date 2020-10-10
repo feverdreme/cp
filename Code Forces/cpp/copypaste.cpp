@@ -14,7 +14,6 @@ typedef pair<ll,ll> pz;
 
 #define vec vector
 #define pb push_back
-#define pub push_back
 #define pob pop_back
 #define tup tuple
 #define mp make_pair
@@ -47,8 +46,8 @@ vi factors(int n){
 	int count=1;
 	while(count<=sqrtofn){
 		if(n%count==0){
-			factors.pub(count);
-			if(count*count!=n)factors.pub(n/count);
+			factors.pb(count);
+			if(count*count!=n)factors.pb(n/count);
 		}
 		count++;
 	}
@@ -58,7 +57,7 @@ vi factors(int n){
 template<class T>
 vec<T> filter(vec<T> iter, T delim){
 	vec<T> ret;
-	fori (i,iter) if (i != delim) ret.pub(i);
+	fori (i,iter) if (i != delim) ret.pb(i);
 	return ret;
 }
 
@@ -66,27 +65,9 @@ vs ssplit(string s, char delim){
 	stringstream ss(s);
 	string token;
 	vs ret;
-	while(getline(ss,token,delim)) ret.pub(token);
+	while(getline(ss,token,delim)) ret.pb(token);
 	ret = filter<string>(ret,"");
 	return ret;
-}
-
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
 }
 
 void setIO(string filename){
@@ -94,9 +75,30 @@ void setIO(string filename){
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+int t,n,k;
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+	
+	cin >> t;
+	while(t--){
+		cin >> n >> k;
 
+		vi candies (n);
+		candies.empty();
+		rep(n){
+			cin >> candies[i];
+		}
+		sort(candies.begin(), candies.end());
 
+		int first = candies[0];
+		int val = 0;
+
+		for (int i = 1; i<n;i++){
+			val += static_cast<int>(floor( (k - candies[i] ) / first ));
+		}
+		cout << val << endl;
+	}
+	
 	return 0;
 }

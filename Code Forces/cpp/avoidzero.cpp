@@ -71,32 +71,110 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+vi rearrange(vi &arr){
+
+	vi ret;
+	ret.empty();
+	
+	set<int> check (arr.begin(), arr.end());
+	if (check.size() == 2){
+		auto it = check.begin();
+		int m1 = *it;
+		check.erase(it);
+		it = check.begin();
+		int m2 = *it;
+		check.erase(it);
+
+		int c1 = count(arr.begin(), arr.end(), m1);
+		int c2 = count(arr.begin(), arr.end(), m2);
+
+		if (c1 > c2){
+			rep(c1) ret.pb(m1);
+			rep(c2) ret.pub(m2);
+		} else {
+			rep(c2) ret.pb(m2);
+			rep(c1) ret.pub(m1);
+		}
+
+		if (ret[0] == 0){
+			reverse(ret.begin(), ret.end());
+		}
+
+		return ret;
+	} else if (check.size() == 1){
+
+		rep(arr.size()) ret.pb(arr[0]);
+
+		return ret;
+	}
+
+	int currsum = 0;
+
+	while (arr.size() != 0){
+
+		for (auto &i : arr){
+			if (currsum + i != 0){
+				ret.pb(i);
+				
+				for (int j=0;j<arr.size();j++){
+					if (arr[j] == i){
+						arr.erase(arr.begin() + j);
+						break;
+					}
+				}
+
+				currsum += i;
+				break;
+			}
+		}
+	}
+
+	if (ret[0] == 0){
+		reverse(ret.begin(), ret.end());
+	}
+
+	return ret;
+}
+
+int t, n;
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	cin >> t;
 
+	while(t--){
+		cin >> n;
+
+		vi arr(n);
+		arr.empty();
+
+		rep(n){
+			cin >> arr[i];
+		}
+
+		int s = 0;
+		for (auto &i : arr){
+			s += i;
+		}
+
+		sort(arr.begin(), arr.end());
+
+		if (s != 0){
+			cout << "YES" << endl;
+			
+			for (auto &i : rearrange(arr)) cout << i << space;
+
+		} else cout << "NO";
+
+		cout << endl;
+	}
+	
+	
 	return 0;
 }

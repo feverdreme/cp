@@ -71,32 +71,59 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+int t, n;
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+	
+	cin >> t;
+	while(t--){
+		cin >>> n;
+		vi arr (n);
+		rep(n) cin >> arr[i];
 
+		map<int,int> sinceseen;
 
+		for (auto &i : arr){
+			sinceseen.insert({i, 0});
+		}
+
+		map<int,int> maxseen (sinceseen.begin(), sinceseen.end());
+
+		F0R(i,n){
+			int num = arr[i];
+			int lastseen = sinceseen[num];
+			sinceseen[num] = i;
+
+			maxseen[num] = max(maxseen[num], i - lastseen);
+		}
+
+		for (auto &i : sinceseen){
+			maxseen[i.fir] = max(maxseen[i.fir] , n - sinceseen[i.sec]);
+		}
+
+		vi ret (n, -1);
+		sort(maxseen.begin(), maxseen.end());
+
+		for (auto &i : maxseen){
+			int num = i.sec + 1;
+
+			if (ret[num] != -1){
+				ret[num] = i.fir;
+			}
+		}
+
+		disp(ret);
+		cout << endl;
+		
+
+	}
+
+	
 	return 0;
 }
