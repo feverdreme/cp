@@ -71,32 +71,36 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+int n;
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	cin >> n;
+	
+	int na=0,nb=0,nc=0;
+	int token;
+	rep(n){
+		cin >> token;
+		switch(token){
+			case 1:
+				na++;
+				break;
+			case 2:
+				nb++;
+				break;
+			case 3:
+				nc++;
+				break;
+		}
+	}
 
+	cout << na + nb + nc - max(max(na,nc),nb);
+	
 	return 0;
 }

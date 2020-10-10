@@ -71,32 +71,70 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+int t, n, k;
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	ofstream cout ("input.in");
 
+	cin >> t;
+	while (t--){
+		cin >> n >> k;
+
+		string games;
+		cin >> games;
+
+		bool pw = false;
+
+		for (int i=0;i<n;i++){
+
+			if (games[i] == 'L'){
+				if (pw){
+					games[i] = 'W';
+					k--;
+					pw = true;
+
+					if (k == 0) break;
+
+				} else if (i != n-1 && games[i+1] == 'W'){
+					games[i] == 'W';
+					k--;
+					pw = true;
+
+					if (k == 0) break;
+				} else {
+					pw = false;
+				}
+			} else {
+				pw = true;
+			}
+		}
+
+		int score=0;
+		pw = false;
+		for (auto &i : games){
+			if (i == 'W'){
+				
+				if (pw) score += 2;
+				else score += 1;
+
+				pw = true;
+
+			} else {
+				pw = false;
+			}
+		}
+
+		cout << score << endl;
+		
+	}
+	
+	
 	return 0;
 }

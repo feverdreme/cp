@@ -14,7 +14,6 @@ typedef pair<ll,ll> pz;
 
 #define vec vector
 #define pb push_back
-#define pub push_back
 #define pob pop_back
 #define tup tuple
 #define mp make_pair
@@ -71,32 +70,46 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+int token, token2;
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+	
+	vi edges[21];
+	rep(14){
+		cin >> token >> token2;
+		edges[token].pub(token2);
+		edges[token2].pub(token);
+	}
 
+	vec<pii> solution;
+	set<int> visited;
+	int counter = 0;
+
+	for (int i=1; i<21; i++){
+		if (edges[i].size() == 1) {
+			auto it = visited.find(i);
+			auto it2 = visited.find(edges[i][0]);
+
+			if (it == visited.end() && it2 == visited.end()){
+				solution.pub(mp( i , edges[i][0]   ));
+				visited.insert(i);
+				visited.insert(edges[i][0]);
+				counter++;
+				if (counter == 6) break;
+			}
+			
+		}
+	}
+
+	for (auto &i : solution){
+		cout << i.fir << space << i.sec << endl;
+	}
 
 	return 0;
 }

@@ -13,7 +13,6 @@ typedef pair<int,int> pii;
 typedef pair<ll,ll> pz;
 
 #define vec vector
-#define pb push_back
 #define pub push_back
 #define pob pop_back
 #define tup tuple
@@ -71,32 +70,38 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+int n, t;
+ll token;
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+	
+	cin >> t;
+	while(t--){
+		cin >> n;
+		map<ll,ll> count;
+		count.empty();
+		rep(n){
+			cin >> token;
+			ll rt = static_cast<ll>(floor(log2(token)));
+			
+			auto it = count.find(rt);
+			if (it == count.end()) count.insert({rt, 1});
+			else count[rt]++;
+		}
 
+		ll val = 0;
+		for (auto &i : count){
+			val += i.second * (i.second-1) / 2;
+		}
+		cout << val <<endl;
 
+	}
+	
 	return 0;
 }

@@ -71,32 +71,105 @@ vs ssplit(string s, char delim){
 	return ret;
 }
 
-template<class InputIterator>
-ll arr_sum(InputIterator first, InputIterator last){
-	ll sum = 0;
-	while(first != last){
-		sum += *first;
-		first++;
-	}
-	return sum;
-}
-
-template<class InputIterator, class T>
-InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
-	while (first != last){
-		if (*first == val) return first;
-	}
-	throw "Element does not exist\n";
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
+ll t,n,T;
+
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	cin >> t;
+	while(t--){
+		cin >> n >> T;
 
+		vll arr (n);
+		arr.empty();
+		rep(n) cin >> arr[i];
+		
+		vec<short> ret(n);
+		bool onWhite = true;
+
+		for (ll i = 0; i<n; i++){
+
+			ll num = arr[i];
+
+			if (num * 2 == T) {
+				if (onWhite){
+					ret[i] = 1;
+					onWhite = false;
+				} else {
+					ret[i] = 0;
+					onWhite = true;
+				}
+				
+				continue;
+			}
+
+			if (num == min(num, T-num)) ret[i] = 1;
+			else ret[i] = 0;
+		}
+
+		disp(ret);
+		cout << endl;
+
+	}
+	
+	
 	return 0;
 }
+
+/* cin >> n >> T;
+		vll arr (n);
+
+		rep(n) cin >> arr[i];
+
+		vll white;
+		vll black;
+		ll arrsize = n;
+		ll num;
+
+		while(arr.size() > 0){
+			num = arr.back();
+			arrsize--;
+			arr.pob();
+			
+			white.pb(arrsize);
+
+			if (arr.size() == 0) break;
+			auto it = find(arr.begin(), arr.end(), T-num);
+			if (it == arr.end()){
+				
+				if (arr.size() == 0) break;
+
+				num = arr.back();
+				arrsize--;
+				arr.pob();
+				
+				white.pb(arrsize);
+
+			} else {
+				if (arr.size() == 0) break;
+
+				num = *it;
+				arr.erase( remove(arr.begin(), arr.end(), num), arr.end());
+				arrsize--;
+
+				black.pb(it - arr.begin());
+			}
+
+		}
+
+		vll ret (n);
+		ret.empty();
+		for (auto &i : white){
+			ret[i] = 1;
+		}
+		for (auto &i : black){
+			ret[i] = 0;
+		}
+
+		disp(ret);
+		cout << endl; */
