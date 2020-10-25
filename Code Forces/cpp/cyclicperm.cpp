@@ -89,32 +89,36 @@ InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
 	throw "Element does not exist\n";
 }
 
-template<class InputIterator, class T>
-vll find_all(InputIterator first, InputIterator last, const T& val){
-	vec<T> inds;
-
-	InputIterator ptr = first;
-
-	while(ptr != last){
-		if (*ptr == val) inds.pb(ptr - first);
-		ptr++;
-	}
-
-	return inds;
-}
-
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
-/*
-
-*/
+ll n;
+#define MAXN 1000000007
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	cin >> n;
+
+	ll sub = 1;
+	rep(n-1){
+		sub = ((sub % MAXN) * 2) % MAXN;
+	}
+
+	ll fact = 1;
+	for (int i=2;i<=n;i++){
+		fact *= i;
+		fact %= MAXN;
+	}
+
+	ll ret;
+
+	ret = fact-sub;
+	if (ret < 0) ret += MAXN;
+
+	cout << ret << endl;
 
 	return 0;
 }

@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
 
+#pragma GCC optimize ("Ofast")
+// #pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+
 using namespace std;
 
 typedef long long ll;
@@ -34,6 +38,7 @@ typedef pair<ll,ll> pz;
 #define R0F(i,a) for(int i=a;i>=0;i--)
 
 #define OE <<endl
+#define aendl "<-\n"
 #define space ' '
 #define elif else if
 // #define cout cout<<
@@ -56,7 +61,7 @@ vi factors(int n){
 }
 
 template<class T>
-vec<T> filter(vec<T> iter, T delim){
+vec<T> filter(vec<T> iter, const T delim){
 	vec<T> ret;
 	fori (i,iter) if (i != delim) ret.pub(i);
 	return ret;
@@ -109,12 +114,55 @@ void setIO(string filename){
 }
 
 /*
-
+5
+7
+0 0 1 0 1 0 1
+3
+1 0 0
+5
+1 1 0 0 1
+6
+1 0 0 0 0 1
+5
+1 1 0 1 1
 */
+
+int t,n;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	cin >> t;
+	while(t--){
+		cin >> n;
+		vi spaces;
+		spaces.clear();
+		int token;
+		
+		int lastseen = -1;
+		rep(n){
+			cin >> token;
+
+			if (lastseen == -1){
+				if (token == 1) lastseen = i;
+			} else {
+				if (token == 1) {
+					spaces.pb(i-lastseen-1);
+					lastseen = i;
+				}
+			}
+		}
+
+		filter(spaces, 0);
+
+		if (spaces.size() == 0){
+			cout << "0";
+		} else {
+			cout << arr_sum(spaces.begin(), spaces.end());
+		}
+		cout << endl;
+
+	}
 
 	return 0;
 }

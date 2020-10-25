@@ -85,6 +85,7 @@ template<class InputIterator, class T>
 InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
 	while (first != last){
 		if (*first == val) return first;
+		first++;
 	}
 	throw "Element does not exist\n";
 }
@@ -108,12 +109,67 @@ void setIO(string filename){
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
-/*
+int t,n;
+set<ll> seen;
 
-*/
+int solve(vll &arr){
+	ll maxd = *max_element(arr.begin(), arr.end());
+
+	for (auto &ind : find_all(arr.begin(), arr.end(), maxd)){
+		if (ind == 0){
+			if (arr[ind+1] != maxd){
+				return ind;
+			}
+		} else if (ind == arr.size() - 1){
+			if (arr[ind-1] != maxd){
+				return ind;
+			}
+		} else {
+			if (arr[ind-1] != maxd || arr[ind+1] != maxd){
+				return ind;
+			}
+		}
+	}
+
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+
+	/*
+		6
+		5
+		5 3 4 4 5
+		3
+		1 1 1
+		5
+		4 4 3 4 4
+		5
+		5 5 4 3 2
+		3
+		1 1 2
+		5
+		5 4 3 5 5
+	*/
+
+	cin >> t;
+	while(t--){
+		cin >> n;
+		vll arr(n);
+		seen.clear();
+
+		rep(n){
+			cin >> arr[i];
+			seen.insert(arr[i]);
+		};
+
+		if (seen.size() == 1){
+			cout << "-1\n";
+			continue;
+		}
+
+		cout << solve(arr) + 1 << endl;
+	}
 
 
 	return 0;
