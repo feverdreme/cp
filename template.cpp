@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
 
+#pragma GCC optimize("Ofast")
+// #pragma GCC optimize ("O3")
+#pragma GCC target("sse4")
+
 using namespace std;
 
 typedef long long ll;

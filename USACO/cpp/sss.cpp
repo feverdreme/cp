@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
 
+#pragma GCC optimize("Ofast")
+// #pragma GCC optimize ("O3")
+#pragma GCC target("sse4")
+
 using namespace std;
 
 typedef long long ll;
@@ -36,6 +40,7 @@ typedef pair<ll,ll> pz;
 #define OE <<endl
 #define space ' '
 #define elif else if
+#define aendl "<-\n"
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
@@ -127,15 +132,14 @@ ll getcount(int ind){
 	ll ret = 0;
 
 	for (ll i=7; i<=allsum; i+=7){
-		ll converse = i - pre[ind];
-		if (converse < 0) continue;
+		ll converse = pre[ind] - i;
+
+		if (pre[ind] < i) continue;
 
 		vll arr = prefix[converse];
 		if (arr.size() == 0) continue;
 
-		for (auto &j : arr){
-			if (j <= ind) ret++;
-		}
+		ret = max(ret , ind - *min_element(arr.begin(), arr.end()));
 
 	}
 
@@ -146,6 +150,7 @@ int n;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+	setIO("div7");
 	
 	cin >> n;
 	vll cows(n);
@@ -163,12 +168,12 @@ int main() {
 		pre[i] = currsum;
 	}
 
-	ll count = 0;
+	ll out = 0;
 	F0R(i,n){
-		count += getcount(i);
+		out = max(getcount(i), out);
 	}
 
-	cout << count << endl;
+	cout << out << endl;
 
 	return 0;
 }
