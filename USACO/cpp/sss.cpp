@@ -131,17 +131,14 @@ ll allsum = 0;
 ll getcount(int ind){
 	ll ret = 0;
 
-	for (ll i=7; i<=allsum; i+=7){
-		ll converse = pre[ind] - i;
+	ll converse = pre[ind] - 7;
 
-		if (pre[ind] < i) continue;
+	if (pre[ind] < 7) return 0;
 
-		vll arr = prefix[converse];
-		if (arr.size() == 0) continue;
+	vll arr = prefix[converse];
+	if (arr.size() == 0) return 0;
 
-		ret = max(ret , ind - *min_element(arr.begin(), arr.end()));
-
-	}
+	ret = max(ret , ind - *min_element(arr.begin(), arr.end()));
 
 	return ret;
 }
@@ -150,7 +147,7 @@ int n;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
-	setIO("div7");
+	// setIO("div7");
 	
 	cin >> n;
 	vll cows(n);
@@ -164,8 +161,8 @@ int main() {
 	int currsum = 0;
 	F0R(i,n){
 		currsum += cows[i];
-		prefix[currsum].push_back(i);
-		pre[i] = currsum;
+		prefix[currsum].push_back(i % 7);
+		pre[i] = currsum % 7;
 	}
 
 	ll out = 0;
