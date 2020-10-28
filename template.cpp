@@ -107,6 +107,20 @@ vll find_all(InputIterator first, InputIterator last, const T& val){
 	return inds;
 }
 
+template <class T>
+void Max(T &a, const T &b)
+{
+	T *ptr = &a;
+	*ptr = max(a, b);
+}
+
+template <class T>
+void Min(T &a, const T &b)
+{
+	T *ptr = &a;
+	ptr = min(a, b);
+}
+
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
