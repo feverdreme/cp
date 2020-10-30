@@ -118,7 +118,7 @@ template <class T>
 void Min(T &a, const T &b)
 {
 	T *ptr = &a;
-	ptr = min(a, b);
+	*ptr = min(a, b);
 }
 
 void setIO(string filename){

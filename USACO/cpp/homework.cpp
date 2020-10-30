@@ -118,7 +118,7 @@ template <class T>
 void Min(T &a, const T &b)
 {
 	T *ptr = &a;
-	ptr = min(a, b);
+	*ptr = min(a, b);
 }
 
 void setIO(string filename){
@@ -136,6 +136,8 @@ int n;
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	setIO("homework");
+
 	cin >> n;
 	vi arr(n);
 
@@ -148,7 +150,38 @@ int main() {
 		prefixsum.insert({i,allsum});
 	}
 
-	//continue with the solution
+	//get the mins
+	map<int,int> mins;
+	int currmin = 10000000;
+	for(int i=n-1;i>=0;i--){
+		Min(currmin, arr[i]);
+		mins.insert({i,currmin});
+	}
+
+	//iterate through all K, starting from right to left
+	//score : vector of K's
+	map<long double, vi > ans;
+	long double maxscore = 0;
+
+	ll currsum = arr[n-1];
+	for(int K = n-2; K>=0; K--){
+		currsum += arr[K];
+
+		//get the score, then put in map. after find max score, and extract the vector with key of that score
+		long double score = (1.0 * currsum - mins[K]) / (n- K - 1);
+
+		// printf("%ll %d\n", score, K);
+		ans[score].pb(K);
+		Max(maxscore, score);
+	}
+
+	reverse(ans[maxscore].begin(), ans[maxscore].end());
+
+	for(auto &i : ans[maxscore]){
+		if (i == 0) continue;
+
+		cout << i << endl;
+	}
 
 
 	return 0;
