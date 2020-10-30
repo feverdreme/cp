@@ -127,6 +127,17 @@ void setIO(string filename){
 }
 
 /*
+Time complexities
+
+O(n) = 10^8
+O(n^2) = 10^4
+O(n^3) = 200
+O(logn) = Very big number, fucking massive 10^(4 * 10^8)
+O(nlogn) = 10^7
+O(2^n) = 24
+*/
+
+/*
 
 */
 
