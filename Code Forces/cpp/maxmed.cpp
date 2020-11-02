@@ -38,7 +38,6 @@ typedef pair<ll,ll> pz;
 #define R0F(i,a) for(int i=a;i>=0;i--)
 
 #define OE <<endl
-#define aendl "<-\n"
 #define space ' '
 #define elif else if
 // #define cout cout<<
@@ -139,12 +138,58 @@ O(2^n) = 24
 */
 
 /*
-
+3 2
+1 3 5
 */
+
+int n;
+int midn;
+
+ll k;
+ll token;
+vll arr;
+
+ll operations(ll x){
+	ll sum = 0;
+
+	for (int i=midn;i<=n;i++){
+		if (x - arr[i] <= 0) break;
+		sum += x-arr[i];
+	}
+
+	return sum;
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	// ofstream cout("out.out");
+
+	cin >> n >> k;
+	arr.pb(0);
+	rep(n){
+		cin >> token;
+		arr.pb(token);
+	}
+	sort(arr.begin(), arr.end());
+	midn = (n+1)/2;
+
+	//binary search on the answer
+	ll lbound = arr[midn];
+	ll ubound = lbound + k;
+	ll mid;
+	ll ans = -1;
+
+	while (lbound <= ubound){
+		mid = (ubound + lbound) / 2;
+		if (operations(mid) <= k){
+			lbound = mid+1;
+			ans = mid;
+		} else {
+			ubound = mid-1;
+		}
+	}
+	cout << ans;
 
 	return 0;
 }

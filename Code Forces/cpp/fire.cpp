@@ -38,7 +38,6 @@ typedef pair<ll,ll> pz;
 #define R0F(i,a) for(int i=a;i>=0;i--)
 
 #define OE <<endl
-#define aendl "<-\n"
 #define space ' '
 #define elif else if
 // #define cout cout<<
@@ -139,12 +138,30 @@ O(2^n) = 24
 */
 
 /*
-
+3
+3 7 4
+2 6 5
+3 7 6
 */
+
+int n, t, d, p;
+
+struct tdp {
+	int t, d, p;
+	tdp(int a, int b, int c) : t(a), d(b), p(c){}
+};
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	cin >> n;
+	vector<tdp> arr;
+	rep(n){
+		cin >> t >> d >> p;
+		arr.push_back(tdp(t,d,p));
+	}
+
+	
 
 	return 0;
 }

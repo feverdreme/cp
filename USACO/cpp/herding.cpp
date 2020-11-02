@@ -38,7 +38,6 @@ typedef pair<ll,ll> pz;
 #define R0F(i,a) for(int i=a;i>=0;i--)
 
 #define OE <<endl
-#define aendl "<-\n"
 #define space ' '
 #define elif else if
 // #define cout cout<<
@@ -128,23 +127,47 @@ void setIO(string filename){
 }
 
 /*
-Time complexities
-
-O(n) = 10^8
-O(n^2) = 10^4
-O(n^3) = 200
-O(logn) = Very big number, fucking massive 10^(4 * 10^8)
-O(nlogn) = 10^7
-O(2^n) = 24
+3
+7
+4
+9
 */
 
-/*
-
-*/
+int n;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	cin >> n;
+	vll arr (n);
+	stack<int> spaces;
+
+	rep(n) cin >> arr[i];
+
+	sort(arr.rbegin(), arr.rend());
+
+	//find breaks
+
+	
+
+	//find the last consecutive
+
+	int lastnum = -1;
+	int numconsec = 1;
+	for (auto &i : arr){
+		if (lastnum == -1){
+			lastnum = i;
+			continue;
+		}
+
+		if (lastnum + 1 != i){
+			break;
+		}
+
+		numconsec++;
+	}
+
+	cout << n - numconsec;
 
 	return 0;
 }
