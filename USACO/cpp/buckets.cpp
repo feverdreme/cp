@@ -139,12 +139,65 @@ O(2^n) = 24
 */
 
 /*
-
+..........
+..........
+..........
+..B.......
+..........
+.....R....
+..........
+..........
+.....L....
+..........
 */
+
+char token;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	setIO("buckets");
+
+	pii b, r, l;
+
+	F0R(i,10){
+		F0R(j,10){
+			cin >> token;
+			switch(token){
+				case 'B':
+				b = {i,j};
+				break;
+
+				case 'R':
+				r = {i,j};
+				break;
+
+				case 'L':
+				l = {i,j};
+				break;
+
+				case '.':
+				break;
+			}
+		}
+	}
+	
+	int ans = abs(b.f - l.f) + abs(b.s - l.s);
+
+	int minf = min(b.f, l.f);
+	int maxf = max(b.f, l.f);
+	int mins = min(b.s, l.s);
+	int maxs = max(b.s, l.s);
+
+	if (b.f == l.f && r.f == b.f && r.s > mins && r.s < maxs){
+		ans++;
+	} else if (b.s == l.s && r.s == b.s && r.f > minf && r.f < maxf){
+		ans++;
+	} else {
+		ans--;
+	}
+
+	cout << ans;
 
 	return 0;
 }

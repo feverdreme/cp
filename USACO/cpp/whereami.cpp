@@ -139,12 +139,55 @@ O(2^n) = 24
 */
 
 /*
-
+7
+ABCDABC
 */
+
+int n;
+string mailboxes;
+
+bool check(int k){
+
+	set<string> mls;
+
+	int mlslen;
+	string token;
+
+	for (int i=0; i <= n-k; i++){
+		token = mailboxes.substr(i,k);
+		mls.insert(token);
+
+		if (i == 0) continue;
+		else if (mls.size() != i+1) return false;
+	}
+
+	return true;
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	setIO("whereami");
+
+	cin >> n >> mailboxes;
+
+	//bin search
+	int lbound = 1;
+	int ubound = n;
+	int mid;
+	int ans = -1;
+
+	while (lbound <= ubound){
+		mid = (lbound + ubound) / 2;
+		if (check(mid)){
+			ubound = mid - 1;
+			ans = mid;
+		} else {
+			lbound = mid + 1;
+		}
+	}
+
+	cout << ans;
 
 	return 0;
 }

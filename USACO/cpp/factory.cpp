@@ -139,12 +139,79 @@ O(2^n) = 24
 */
 
 /*
-
+3
+1 2
+3 2
 */
+
+int n;
+map<int, vi> edges;
+set<int> unvcpy;
+
+bool dfs(int endp, int st){
+	if (endp == st) return true;
+
+	stack<int> stk;
+	set<int> unvisited (unvcpy.begin(), unvcpy.end());
+	stk.push(st);
+
+	int t;
+	while(!stk.empty()){
+		t = stk.top();
+		stk.pop();
+
+		if (t == endp) return true;
+		else {
+			for (auto &v : edges[t]){
+
+				if (unvisited.count(v)){
+					stk.push(v);
+					unvisited.erase(v);
+				}
+			}
+		}
+
+	}
+
+	return false;
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	setIO("factory");
+
+	cin >> n;
+
+	rep(n) unvcpy.insert(i+1);
+	
+	int t1, t2;
+	rep(n-1){
+		cin >> t1 >> t2;
+		edges[t1].pb(t2);
+	}
+
+	//brute force every possible end point
+	bool alltrue;
+
+	for (int endp = 1; endp <= n; endp++)
+	{
+		alltrue = true;
+
+		for (int st = 1; st <= n; st++){
+			if (!dfs(endp, st)){
+				alltrue = false;
+				break;
+			}
+		}
+
+		if (alltrue){
+			cout << endp;
+			return 0;
+		}
+	}
+	
+	cout << "-1";
 
 	return 0;
 }
