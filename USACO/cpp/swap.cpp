@@ -150,40 +150,55 @@ ll k;
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
-	setIO("swap");
+	// setIO("swap");
+	ifstream cin ("2.in");
+	ofstream cout ("swap.out");
 
 	cin >> n >> m >> k;
 
-	// find the cycle length
 	vec<pii> lr (m);
 	rep(m) cin >> lr[i].f >> lr[i].s;
 
 	vi arr (n);
 	rep(n) arr[i] = i+1;
 
-	vi arcpy (arr.begin(), arr.end());
+	vi arrcpy (arr.begin(), arr.end());
+	rep(m) reverse(arrcpy.begin() + lr[i].f - 1, arrcpy.begin() + lr[i].s);
 
-	ll cycle = -1;
+	//get the index jumps
+	map<int,int> mappings;
+	for (int i=0; i<n; i++){
+		mappings[arrcpy[i]] = i+1;
+	}
 
-	F0R(i,k){
-		F0R(j,m) reverse(arcpy.begin() + lr[j].f - 1, arcpy.begin() + lr[j].s);
+	//get the cycles
+	map<int,vi> cycles;
+	int ptr;
+	for (int i=1; i<=n; i++){ // for every cow find their cycles
+		ptr = i;
 
-		if (arcpy == arr){
-			cycle = i+1;
-			break;
+		for(int cycle=1; cycle <= n+1; cycle++){
+			ptr = mappings[ptr];
+			cycles[i].pb(ptr);
+
+			if (ptr == i) break;
+
 		}
 	}
 
-	if (cycle == -1){
-		dispbr(arcpy);
-	} else {
-		k = k % cycle;
+	//for each thing get the mod and then swap them there shouldnt be any collisions
+	vi solution (n);
+	ll m;
+	for (int i=1;i<=n;i++){
+		m = k % cycles[i].size();
+		// cout << m << aendl;
+		solution[i-1] = cycles[i][m-1];
 
-		rep(k){
-			F0R(j,m) reverse(arcpy.begin() + lr[j].f - 1, arcpy.begin() + lr[j].s);
-		}
+		if (m == 0) solution[i-1] = cycles[i][cycles[i].size()-1];
+	}
 
-		dispbr(arcpy);
+	for (auto &i : solution){
+		cout << i << endl;
 	}
 
 	return 0;
