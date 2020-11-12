@@ -46,6 +46,60 @@ typedef pair<ll,ll> pz;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
 #define disp(n) for(auto& i:n) cout<<i<<space
 
+template<class T>
+class dsu{
+private:
+    map<T,T> _dsu;
+    set<T> _members;
+    pair<T,long long> _find_set(T a){
+        stack<int> stk;
+        T head = a;
+        while(head != _dsu[head]){
+            head = _dsu[head];
+            stk.push(head);
+        }
+        //compression
+        long long stksize = 0;
+        T temp;
+        while(stk.size() != 0){
+            temp = stk.top();
+            stk.pop();
+            _dsu[temp] = head;
+            stksize++;
+        }
+        return {head, stksize};
+    }
+public:
+    dsu(){}
+    dsu(T val){
+        _dsu[val] = val;
+        _members.insert(val);
+    }
+    bool union_find(T a, T b){
+        pair<T, long long> h1 = _find_set(a), h2 = _find_set(b);
+        //union them
+        if (h1.second > h2.second){
+            _dsu[h2.first] = h1.first;
+        } else {
+            _dsu[h1.first] = h2.first;
+        }
+        return h1.first == h2.first;
+    }
+    T find_set(T a){
+        return _find_set(a).first;
+    }
+    void add_child(T parent, T child){
+        if (_members.find(parent) == _members.end()){
+            _dsu[parent] = parent;
+        }
+        _dsu[child] = parent;
+    }
+    void add_member(T a){
+        _members.insert(a);
+        _dsu[a] = a;
+    } 
+};
+
 vi factors(int n){
 	vi factors;
 	double sqrtofn=sqrt(n);
