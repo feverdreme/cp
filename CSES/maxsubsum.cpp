@@ -46,6 +46,60 @@ typedef pair<ll,ll> pz;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
 #define disp(n) for(auto& i:n) cout<<i<<space
 
+template<class T>
+class dsu{
+private:
+    map<T,T> _dsu;
+    set<T> _members;
+    pair<T,long long> _find_set(T a){
+        stack<int> stk;
+        T head = a;
+        while(head != _dsu[head]){
+            head = _dsu[head];
+            stk.push(head);
+        }
+        //compression
+        long long stksize = 0;
+        T temp;
+        while(stk.size() != 0){
+            temp = stk.top();
+            stk.pop();
+            _dsu[temp] = head;
+            stksize++;
+        }
+        return {head, stksize};
+    }
+public:
+    dsu(){}
+    dsu(T val){
+        _dsu[val] = val;
+        _members.insert(val);
+    }
+    bool union_find(T a, T b){
+        pair<T, long long> h1 = _find_set(a), h2 = _find_set(b);
+        //union them
+        if (h1.second > h2.second){
+            _dsu[h2.first] = h1.first;
+        } else {
+            _dsu[h1.first] = h2.first;
+        }
+        return h1.first == h2.first;
+    }
+    T find_set(T a){
+        return _find_set(a).first;
+    }
+    void add_child(T parent, T child){
+        if (_members.find(parent) == _members.end()){
+            _dsu[parent] = parent;
+        }
+        _dsu[child] = parent;
+    }
+    void add_member(T a){
+        _members.insert(a);
+        _dsu[a] = a;
+    } 
+};
+
 vi factors(int n){
 	vi factors;
 	double sqrtofn=sqrt(n);
@@ -139,47 +193,30 @@ O(2^n) = 24
 */
 
 /*
-3
-3 5
-4 9
-5 8
+8
+-1 3 -2 5 3 -5 2 2
 */
 
 int n;
-vector<pz> arr;
+vll arr;
+vll sums;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
-	cin >> n;
-	arr.resize(n);
+    cin >> n;
+    arr.resize(n);
+    sums.resize(n);
 
-	rep(n){
-		cin >> arr[i].f >> arr[i].s;
-	}
+    rep(n) cin >> arr[i];
 
-	sort(arr.begin(), arr.end(), [](pz a, pz b){
-		if (a.s == b.s){
-			if (a.f < b.f) return true;
-			else return false;
-		} else if (a.s < b.s) return true;
-		else return false;
-	});
+    //search through it
+    sums[0] = arr[0];
+    for (int i=1; i<n;i++){
+        sums[i] = max(arr[i], sums[i-1] + arr[i]);
+    }
 
-	// for (auto &i : arr) cout << i.f << space << i.s << endl;
-
-	int count = 1;
-	//loop through them and go for the next scedule
-	ll curr = arr[0].s;
-
-	for (int i=1;i<n;i++){
-		if (arr[i].f < curr) continue;
-
-		count++;
-		curr = arr[i].s;
-	}
-
-	cout << count;
+    cout << *max_element(sums.begin(), sums.end());
 
 	return 0;
 }
