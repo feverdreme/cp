@@ -166,12 +166,7 @@ template <class T>
 void Max(T &a, const T &b)
 {
 	T *ptr = &a;
-	*ptr = max(a,b);
-}
-template <class T>
-void Max(T &a, const T &&b){
-    T *ptr = &a;
-    *ptr = max(a,b);
+	*ptr = max(a, b);
 }
 
 template <class T>
@@ -180,18 +175,11 @@ void Min(T &a, const T &b)
 	T *ptr = &a;
 	*ptr = min(a, b);
 }
-template <class T>
-void Min(T &a, const T &&b){
-    T *ptr = &a;
-    *ptr = min(a,b);
-}
 
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
-
-char sp = ' ';
 
 /*
 Time complexities
@@ -205,12 +193,37 @@ O(2^n) = 24
 */
 
 /*
-
+8 3
+3 6 2
 */
+
+ll x;
+int p;
+vll lights;
+set<ll> spaces;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+    cin >> x >> p;
+    lights.resize(p);
+
+    rep(p) cin >> lights[i];
+
+    ll maxsp = 0;
+    ll maxl = 0;
+    rep(p){
+        if (i == 0){
+            maxsp = max(maxsp, lights[i]);
+            maxl = max(maxl, lights[i]);
+        } else {
+            maxsp = max(maxsp, lights[i] - lights[i-1]);
+            maxl = max(maxl,lights[i]);
+        }
+
+        cout << max(maxsp, x - maxl) << space;
+
+    }
 
 	return 0;
 }

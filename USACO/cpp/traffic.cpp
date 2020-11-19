@@ -166,7 +166,7 @@ template <class T>
 void Max(T &a, const T &b)
 {
 	T *ptr = &a;
-	*ptr = max(a,b);
+	*ptr = max(a, b);
 }
 template <class T>
 void Max(T &a, const T &&b){
@@ -185,6 +185,7 @@ void Min(T &a, const T &&b){
     T *ptr = &a;
     *ptr = min(a,b);
 }
+
 
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
@@ -205,12 +206,103 @@ O(2^n) = 24
 */
 
 /*
-
+4
+on 1 1
+none 10 14
+none 11 15
+off 2 3
 */
+
+int n;
+
+struct light {
+    string state;
+    int lbound;
+    int ubound;
+
+    light(){}
+    light(string a, int b, int c) : state(a), lbound(b), ubound(c) {}
+};
+
+vec<light> arr;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+    setIO("traffic");
+
+    cin >> n;
+    arr.resize(n);
+
+    rep(n) cin >> arr[i].state >> arr[i].lbound >> arr[i].ubound;
+
+    // propogate forwards to find the min at the end
+    // look for the first none;
+    
+    int minv, maxv;
+    bool foundnone = false;
+    string st;
+
+    rep(n){
+        st = arr[i].state;
+
+        if (!foundnone){
+            if (st == "none"){
+                minv = arr[i].lbound;
+                maxv = arr[i].ubound;
+                foundnone = true;
+            } else continue;
+        }
+
+        if (st == "none"){
+            minv = max(minv, arr[i].lbound);
+            maxv = min(maxv, arr[i].ubound);
+        } elif (st == "on"){
+            minv += arr[i].lbound;
+            maxv += arr[i].ubound;
+        } elif (st == "off"){
+            minv -= arr[i].ubound;
+            maxv -= arr[i].lbound;
+        }
+
+        if (minv < 0) minv = 0;
+        if (maxv < 0) maxv = 0;
+    }
+
+    pii ansn = {minv, maxv};
+
+    reverse(arr.begin(), arr.end());
+    foundnone = false;
+
+    rep(n){
+        st = arr[i].state;
+
+        if (!foundnone){
+            if (st == "none"){
+                minv = arr[i].lbound;
+                maxv = arr[i].ubound;
+                foundnone = true;
+            } else continue;
+        }
+
+        if (st == "none"){
+            minv = max(minv, arr[i].lbound);
+            maxv = min(maxv, arr[i].ubound);
+        } elif (st == "on"){
+            minv -= arr[i].ubound;
+            maxv -= arr[i].lbound;
+        } elif (st == "off"){
+            minv += arr[i].lbound;
+            maxv += arr[i].ubound;
+        }
+
+        if (minv < 0) minv = 0;
+        if (maxv < 0) maxv = 0;
+    }
+
+    pii ans1 = {minv, maxv};
+
+    cout << ans1.f << sp << ans1.s << endl << ansn.f << sp << ansn.s;
 
 	return 0;
 }

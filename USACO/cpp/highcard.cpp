@@ -205,12 +205,57 @@ O(2^n) = 24
 */
 
 /*
-
+3
+1
+6
+4
 */
+
+int n;
+set<int> elsie;
+set<int> bessie;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+    setIO("highcard");
+
+    cin >> n;
+
+    int token;
+    rep(n){
+        cin >> token;
+        elsie.insert(token);
+    }
+
+    rep(n*2){
+        bessie.insert(i+1);
+    }
+    for (auto &i: elsie){
+        bessie.erase(i);
+    }
+
+    // do the thing
+    int count = 0;
+
+    int e, b;
+    while(!elsie.empty() && !bessie.empty()){
+        e = *elsie.rbegin();
+        b = *bessie.rbegin();
+
+        // cout << e << sp << b << aendl;
+
+        if (e < b){
+            elsie.erase(e);
+            bessie.erase(b);
+            count++;
+        } else {
+            elsie.erase(e);
+            bessie.erase(bessie.begin());
+        }
+    }
+
+    cout << count << endl;
 
 	return 0;
 }

@@ -30,7 +30,7 @@ typedef pair<ll,ll> pz;
 //iterators
 #define rep(a) for(int i=0; i<a;i++)
 #define range(i,a,b) for(int i=a;a<b;i++)
-#define fori(i,iter) for(auto i:iter)
+#define fori(iter) for(auto &i:iter)
 
 #define F0R(i,a) for(int i = 0;i<a;i++)
 #define FOR(i,a,b) for(int i=a;i<b;i++)
@@ -117,7 +117,7 @@ vi factors(int n){
 template<class T>
 vec<T> filter(vec<T> iter, T delim){
 	vec<T> ret;
-	fori (i,iter) if (i != delim) ret.pub(i);
+	fori (iter) if (i != delim) ret.pub(i);
 	return ret;
 }
 
@@ -166,12 +166,7 @@ template <class T>
 void Max(T &a, const T &b)
 {
 	T *ptr = &a;
-	*ptr = max(a,b);
-}
-template <class T>
-void Max(T &a, const T &&b){
-    T *ptr = &a;
-    *ptr = max(a,b);
+	*ptr = max(a, b);
 }
 
 template <class T>
@@ -180,18 +175,11 @@ void Min(T &a, const T &b)
 	T *ptr = &a;
 	*ptr = min(a, b);
 }
-template <class T>
-void Min(T &a, const T &&b){
-    T *ptr = &a;
-    *ptr = min(a,b);
-}
 
 void setIO(string filename){
 	freopen((filename + ".in").c_str(), "r" , stdin);
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
-
-char sp = ' ';
 
 /*
 Time complexities
@@ -205,12 +193,58 @@ O(2^n) = 24
 */
 
 /*
-
+5 3
+5 3 7 8 5
+4 8 3
 */
+
+int n,m;
+stack<ll> prices, maxprices;
+map<ll, vll> ans;
+
+bool comp(ll a, ll b){
+    if (a <= b) return true;
+    return false;
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+    cin >> n >> m;
+
+    vll vp (n), vmp(m);
+
+    rep(n) cin >> vp[i];
+    rep(m) cin >> vmp[i];
+
+    vll svp (vp.begin(), vp.end());
+    vll svmp (vmp.begin(), vmp.end());
+    sort(svp.begin(), svp.end(), comp);
+    sort(svmp.begin(), svmp.end(), comp);
+
+    fori(svp) prices.push(i);
+    fori(svmp) maxprices.push(i);
+
+    ll tp, tm;
+    while(!prices.empty() && !maxprices.empty()){
+        tp = prices.top();
+        tm = maxprices.top();
+
+        if (tp <= tm){
+            maxprices.pop();
+            ans[tm].pb(tp); // this assigns a price to a person
+        }
+
+        prices.pop();
+    }
+    
+    fori(vmp){
+        if (ans[i].empty()) cout << -1 << endl;
+        else {
+            cout << ans[i].back() << endl;
+            ans[i].pop_back();
+        }
+    }
 
 	return 0;
 }
