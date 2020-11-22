@@ -1,7 +1,4 @@
-# My Competitve Programming Folder
-
-### This is just so I can easily transfer files such as my template and my solutions between devices
-### plus i think my template is cool
+# My Competitve Programming Template
 
 ```text
  _____                    _       _         _               ___       __  __                  _   _                         
