@@ -205,54 +205,43 @@ O(2^n) = 24
 */
 
 /*
-3 2
-1 1 5 5
-4 4 7 6
-3 3 8 7
+3
+7
+4
+9
 */
 
-int n,k;
-
-int dp[1001][1001];
+int n;
+ll a,b,c;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+    
+    setIO("herding");
+    vll arr (3);
+    rep(3) cin >> arr[i];
+    sort(arr.begin(), arr.end());
+    // find the biggest block of consecutive locations
+    a = arr[0];
+    b = arr[1];
+    c = arr[2];
 
-	setIO("paintbarn");
+    // 1 3 6
+    // 1 2 3 
 
-	cin >> n >> k;
+    ll minans;
 
-	int a,b,c,d;
-	rep(n){
-		cin >> a >> b >> c >> d;
+    if (a+1 == b && b+1 == c) minans = 0;
+    else if (a+1 == b || b+1 == c) minans = 2;
+    else if (a+2 == b || b+2 == c) minans = 1;
+    else minans = 2;
 
-		// a,b       c,b
-		// a,d       c,d
+    // find the biggest gap
+    ll maxans = max(b-a, c-b) - 1;
 
-		for (int i=b; i<d; i++){
-			dp[i][a]++;
-			dp[i][c]--;
-		}
+    if (a+1 == b && b+1 == c) maxans = 0;
 
-	}
-
-	// count the rows
-	int ans = 0;
-
-	int counter;
-	for (int i=0; i < 1001; i++){
-
-		counter = 0;
-		for (int j=0; j < 1001; j++){
-			counter += dp[i][j];
-
-			ans += (counter == k);
-
-		}
-
-	}
-
-	cout << ans;
+    cout << minans << endl << maxans << endl;
 
 	return 0;
 }

@@ -205,54 +205,33 @@ O(2^n) = 24
 */
 
 /*
-3 2
-1 1 5 5
-4 4 7 6
-3 3 8 7
+3
+7
+4
+9
 */
 
-int n,k;
-
-int dp[1001][1001];
+int n;
+vll arr;
+vll gaps;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
-	setIO("paintbarn");
+    cin >> n;
+    arr.resize(n);
 
-	cin >> n >> k;
+    rep(n) cin >> arr[i];
+    sort(arr.begin(), arr.end());
 
-	int a,b,c,d;
-	rep(n){
-		cin >> a >> b >> c >> d;
+    // find the mins
+    // look for all gaps
 
-		// a,b       c,b
-		// a,d       c,d
+    for (int i=1; i<n; i++){
+        gaps.pb(arr[i] - arr[i-1]);
+    }
 
-		for (int i=b; i<d; i++){
-			dp[i][a]++;
-			dp[i][c]--;
-		}
-
-	}
-
-	// count the rows
-	int ans = 0;
-
-	int counter;
-	for (int i=0; i < 1001; i++){
-
-		counter = 0;
-		for (int j=0; j < 1001; j++){
-			counter += dp[i][j];
-
-			ans += (counter == k);
-
-		}
-
-	}
-
-	cout << ans;
+    
 
 	return 0;
 }
