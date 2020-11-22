@@ -1,3 +1,8 @@
+/*
+By Jeffrey Huang
+See README for more details at https://github.com/JeffreyHuang06/cp
+*/
+
 #include <bits/stdc++.h>
 
 #pragma GCC optimize("Ofast")
@@ -149,7 +154,7 @@ InputIterator arr_remove(InputIterator first, InputIterator last, const T& val){
 }
 
 template<class InputIterator, class T>
-vll find_all(InputIterator first, InputIterator last, const T& val){
+vec<T> find_all(InputIterator first, InputIterator last, const T& val){
 	vec<T> inds;
 
 	InputIterator ptr = first;
