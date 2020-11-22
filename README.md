@@ -12,7 +12,8 @@
 ```
 
 
-font from: http://patorjk.com/software/taag/#p=testall&f=3D%20Diagonal&t=Template%20by%20Jeffrey%20Huang
+<a href="http://patorjk.com/software/taag/#p=testall&f=3D%20Diagonal&t=Template%20by%20Jeffrey%20Huang">ASCII Art Website</a>
+
 
 lol u can use this if you want but don't remove the comment at the top
 <br>
