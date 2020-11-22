@@ -1,4 +1,7 @@
-# cp
+# My Competitve Programming Folder
+
+### This is just so I can easily transfer files such as my template and my solutions between devices
+### plus i think my template is cool
 
 ```text
  _____                    _       _         _               ___       __  __                  _   _                         
@@ -12,7 +15,7 @@
 ```
 
 
-<a href="http://patorjk.com/software/taag/#p=testall&f=3D%20Diagonal&t=Template%20by%20Jeffrey%20Huang">ASCII Art Website</a>
+<a href="http://patorjk.com/software/taag/#p=display&f=Doom&t=Template%20by%20Jeffrey%20Huang%0A">ASCII Art Website</a>
 
 
 lol u can use this if you want but don't remove the comment at the top
