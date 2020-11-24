@@ -1,7 +1,6 @@
-#requires at least python 3.6
-
 from sys import argv
 from os import system as cmd
+from os.path import abspath as path
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -11,7 +10,6 @@ args = parser.parse_args()
 
 f = ""
 
-#you might need to change this path right here for you personal computer's path to this folder
 cmd(f"cp ~/Documents/GitHub/cp/template.cpp {args.filename}.cpp")
 
 ofile = args.filename if not args.output else args.output
