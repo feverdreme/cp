@@ -169,19 +169,6 @@ vec<T> find_all(InputIterator first, InputIterator last, const T& val){
 	return inds;
 }
 
-// to hash the stl's
-// from geeksforgeeks
-struct hash_pair
-{
-    template <class T1, class T2>
-    size_t operator()(const pair<T1, T2> &p) const
-    {
-        auto hash1 = hash<T1>{}(p.first);
-        auto hash2 = hash<T2>{}(p.second);
-        return hash1 ^ hash2;
-    }
-};
-
 template <class T>
 void Max(T &a, const T &b)
 {
@@ -225,12 +212,100 @@ O(2^n) = 24
 */
 
 /*
-
+4
+1 3 5
+5 4 3
+7 2 1
+6 1 1
 */
+
+// to hash the stl's
+struct hash_pair
+{
+    template <class T1, class T2>
+    size_t operator()(const pair<T1, T2> &p) const
+    {
+        auto hash1 = hash<T1>{}(p.first);
+        auto hash2 = hash<T2>{}(p.second);
+        return hash1 ^ hash2;
+    }
+};
+
+struct cow{
+    int x,y,p;
+
+    cow(){}
+    cow(int a, int b, int c) : x(a), y(b), p(c*c){}
+
+};
+
+int n;
+vec<cow> cows;
+umap<int, uset<int> > edges;
+umap<pii,double, hash_pair> dp;
+
+double dist(int &a, int &b){
+    pii p = {min(a,b), max(a,b)};
+    if (dp.find(p) != dp.end()) return dp[p];
+
+    double d = pow((cows[a].x - cows[b].x),2) + pow((cows[a].y - cows[b].y),2);
+    dp[p] = d;
+    return d;
+}
+
+void make_edges(int &val){
+
+    for(int i=0;i<n;i++){
+        if (i == val) continue;
+
+        if (dist(i,val) <= cows[val].p) edges[val].insert(i);
+    }
+
+}
+
+int dfs(int &val){
+    stack<int> stk;
+    stk.push(val);
+
+    uset<int> visited;
+
+    int curr;
+    while(stk.size()){
+        curr = stk.top();
+        stk.pop();
+        visited.insert(curr);
+
+        for (auto &e : edges[curr]){
+            if (visited.find(e) == visited.end()) stk.push(e);
+        }
+    }
+
+    return visited.size();
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	setIO("moocast");
+
+    cin >> n;
+
+    int x,y,z;
+    rep(n){
+        cin >> x >> y >> z;
+        cows.pb(cow(x,y,z));
+    }
+
+    // check everything
+    for (int i=0; i<n; i++) make_edges(i);
+
+    // ok now dfs with everything
+    int ans = -1;
+    for (int i=0; i<n; i++){
+        Max(ans,dfs(i));
+    }
+
+    cout << ans;
 
 	return 0;
 }
