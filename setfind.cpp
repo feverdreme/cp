@@ -92,4 +92,20 @@ int main(){
     }
 }
 
+ll dfs(ll node){
+    stack<ll> stk;
+    stk.push(node);
+    unordered_set<ll> visited;
 
+    ll curr;
+    while (stk.size()){ // while not empty
+        curr = stk.top();
+        visited.insert(curr);
+        stk.pop();
+        
+        for (auto &e : edges[curr]){
+            if (visited.find(e) == visited.end()) stk.push(e);
+        }
+    }
+
+}

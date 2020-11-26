@@ -1,0 +1,64 @@
+{
+	"for-0": {
+		"prefix": ["F0R", "f0r"],
+		"body": [
+			"for (int ${1:i}; ${1:i} < ${2:n}; ${1:i}++)$3"
+		],
+		"description": "for-loop starting from 0"
+	},
+	"for-N": {
+		"prefix": "FOR",
+		"body": [
+			"for (int ${1:i} = ${2:1}; ${1:i} < ${3:n}; ${1:i}++)$4"
+		],
+		"description": "for-loop starting from N"
+	},
+
+	"dfs": {
+		"prefix": "dfs",
+		"body": [
+			"${1:int} dfs(${1:int} ${2:node}){",
+				"\tstack<${1:int}> stk;",
+				"\tstk.push(${2:node});",
+				"\tunordered_set<${1:int}> visited;",
+				"\n\t${1:int} curr;",
+				"\twhile (!stk.empty()){ // while not empty",
+					"\t\tcurr = stk.top();",
+					"\t\tvisited.insert(curr);",
+					"\t\tstk.pop();",
+					"\t\t",
+					"\t\tfor (auto &e : edges[curr]){",
+						"\t\t\tif (visited.find(e) == visited.end()) stk.push(e);",
+					"\t\t}",
+				"\t}",
+				"\t$4",
+				"\treturn $3;",
+			"}"
+		],
+		"description": "dfs"
+	},
+
+	"bfs": {
+		"prefix": "bfs",
+		"body": [
+			"${1:int} bfs(${1:int} ${2:node}){",
+				"\tqueue<${1:int}> que;",
+				"\tque.push(${2:node});",
+				"\tunordered_set<${1:int}> visited;",
+				"\n\t${1:int} curr;",
+				"\twhile (!que.empty()){ // while not empty",
+					"\t\tcurr = stk.front();",
+					"\t\tvisited.insert(curr);",
+					"\t\tstk.pop();",
+					"\t\t",
+					"\t\tfor (auto &e : edges[curr]){",
+						"\t\t\tif (visited.find(e) == visited.end()) que.push(e);",
+					"\t\t}",
+				"\t}",
+				"\t$4",
+				"\treturn $3;",
+			"}"
+		],
+		"description": "bfs"
+	}
+}
