@@ -215,66 +215,7 @@ void setIO(string filename){
 	freopen((filename + ".out").c_str(), "w" , stdout);
 }
 
-const char sp = ' ';
-const string alphabet = "abcdefghijklmnopqrstuvwxyz";
-const string ualphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const umap<int, char> charcode = {
-    //lowercase
-    {'a', 0},
-    {'b', 1},
-    {'c', 2},
-    {'d', 3},
-    {'e', 4},
-    {'f', 5},
-    {'g', 6},
-    {'h', 7},
-    {'i', 8},
-    {'j', 9},
-    {'k', 10},
-    {'l', 11},
-    {'m', 12},
-    {'n', 13},
-    {'o', 14},
-    {'p', 15},
-    {'q', 16},
-    {'r', 17},
-    {'s', 18},
-    {'t', 19},
-    {'u', 20},
-    {'v', 21},
-    {'w', 22},
-    {'x', 23},
-    {'y', 24},
-    {'z', 25},
-    // uppercase
-    {'A', 26},
-    {'B', 27},
-    {'C', 28},
-    {'D', 29},
-    {'E', 30},
-    {'F', 31},
-    {'G', 32},
-    {'H', 33},
-    {'I', 34},
-    {'J', 35},
-    {'K', 36},
-    {'L', 37},
-    {'M', 38},
-    {'N', 39},
-    {'O', 40},
-    {'P', 41},
-    {'Q', 42},
-    {'R', 43},
-    {'S', 44},
-    {'T', 45},
-    {'U', 46},
-    {'V', 47},
-    {'W', 48},
-    {'X', 49},
-    {'Y', 50},
-    {'Z', 51}
-};
-
+char sp = ' ';
 
 /*
 Time complexities
@@ -288,13 +229,48 @@ O(2^n) = 24
 */
 
 /*
-
+3 4
+4 1 2 3
+4 1 3 2
+4 2 1 3
 */
 
-int main()
-{
-    std::ios_base::sync_with_stdio(false);cin.tie(0);
+int n,k;
+vec<vec< int> > arr;
 
+int main() {
+	std::ios_base::sync_with_stdio(false);cin.tie(0);
+
+	setIO("gymnastics");
+
+    cin >> k >> n;
+    int token;
+    arr.resize(k);
+
+    rep(k){
+        arr[i].resize(n);
+        F0R(j,n) cin >> arr[i][j];
+    }
+
+    umap<pii,int, hash_pair> count;
+
+    F0R(i,k){
+        F0R(j,n){
+            FOR(l, 1, n - j){
+                int t1 = arr[i][j];
+                int t2 = arr[i][j+l];
+
+                count[{t1,t2}]++;
+            }
+        }
+    }
+
+    int ans = 0;
+    for (auto &p : count){
+        if (p.s == k) ans++;
+    }
+
+    cout << ans;
 
 	return 0;
 }
