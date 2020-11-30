@@ -48,10 +48,6 @@ typedef pair<ll,ll> pz;
 #define aendl "<-\n"
 #define space ' '
 #define elif else if
-
-#define MAXINT 100007
-#define MAXLL 1000000007
-
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
@@ -229,11 +225,27 @@ O(2^n) = 24
 */
 
 /*
-
+3
+10 10 1 1
+3 5 2 4
+10 2 5 1
 */
+
+int t;
+ll n,m,r,c;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+
+	// setIO("prisonbreak");
+
+    cin >> t;
+
+    while (t--){
+        cin >> n >> m >> r >> c;
+
+        cout << max(n - r, r-1) + max(m - c, c-1) << endl;
+    }
 
 
 	return 0;

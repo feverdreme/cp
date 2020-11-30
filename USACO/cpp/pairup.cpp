@@ -48,10 +48,6 @@ typedef pair<ll,ll> pz;
 #define aendl "<-\n"
 #define space ' '
 #define elif else if
-
-#define MAXINT 100007
-#define MAXLL 1000000007
-
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
@@ -229,12 +225,60 @@ O(2^n) = 24
 */
 
 /*
-
+3
+1 8
+2 5
+1 2
 */
+
+int n;
+ll m = 0;
+vec<pz> cows;
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	setIO("pairup");
+
+    cin >> n;
+
+    ll x,y;
+    rep(n){
+        cin >> x >> y;
+        m += x;
+        cows.pb({x,y});
+    }
+    
+    sort(cows.begin(), cows.end(), [](pz a, pz b){
+        if (a.s < b.s) return true;
+        else return false;
+    });
+
+    ll maxtime = 0;
+    int ptr1 = 0, ptr2 = n-1;
+    ll token;
+    ll minn;
+    bool good = true;
+    while (good){
+
+        if (ptr1 != ptr2){
+            minn = min(cows[ptr1].f , cows[ptr2].f);
+            token = cows[ptr1].s + cows[ptr2].s;
+            cows[ptr1].f -= minn;
+            cows[ptr2].f -= minn;
+
+            if (cows[ptr1].f == 0) ptr1++;
+            if (cows[ptr2].f == 0) ptr2--;
+        } else {
+            minn = cows[ptr1].f / 2;
+            token = 2 * cows[ptr1].s;
+            good = false;
+        }
+
+        Max(maxtime, token);
+    }
+
+    cout << maxtime;
 
 	return 0;
 }

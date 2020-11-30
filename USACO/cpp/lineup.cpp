@@ -48,10 +48,6 @@ typedef pair<ll,ll> pz;
 #define aendl "<-\n"
 #define space ' '
 #define elif else if
-
-#define MAXINT 100007
-#define MAXLL 1000000007
-
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
@@ -229,12 +225,84 @@ O(2^n) = 24
 */
 
 /*
-
+3
+Buttercup must be milked beside Bella
+Blue must be milked beside Bella
+Sue must be milked beside Beatrice
 */
+
+/*
+Beatrice
+Belinda
+Bella
+Bessie
+Betsy
+Blue
+Buttercup
+Sue
+*/
+
+umap<string,int> cows = {
+    {"Beatrice" , 0},
+    {"Belinda" , 1},
+    {"Bella" , 2},
+    {"Bessie" , 3},
+    {"Betsy" , 4},
+    {"Blue" , 5},
+    {"Buttercup" , 6},
+    {"Sue" , 7}
+};
+
+umap<int,string> icows = {
+    {0 , "Beatrice"},
+    {1 , "Belinda"},
+    {2 , "Bella"},
+    {3 , "Bessie"},
+    {4 , "Betsy"},
+    {5 , "Blue"},
+    {6 , "Buttercup"},
+    {7 , "Sue"}
+};
+
+vector<pii> rules;
+
+int n;
+
+vi idx = {0,1,2,3,4,5,6,7};
+
+bool check(){
+    for (auto &rule : rules){
+        auto it = find(idx.begin(), idx.end(), rule.f);
+        auto it2 = find(idx.begin(), idx.end(), rule.s);
+
+        if (abs(it - it2) != 1) return false;
+    }
+
+    return true;
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	setIO("lineup");
+
+    cin >> n;
+
+    string t1, t2;
+    rep(n){
+        cin >> t1;
+        F0R(j,4) cin >> t2;
+        cin >> t2;
+
+        rules.pb({cows[t1],cows[t2]});
+    }
+
+    // brute force all solutions
+    do {
+        if (check()) break;
+    } while (next_permutation(idx.begin(), idx.end()));
+
+    for (auto &i : idx) cout << icows[i] << endl;
 
 	return 0;
 }

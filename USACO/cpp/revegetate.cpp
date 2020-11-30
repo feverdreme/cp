@@ -48,10 +48,6 @@ typedef pair<ll,ll> pz;
 #define aendl "<-\n"
 #define space ' '
 #define elif else if
-
-#define MAXINT 100007
-#define MAXLL 1000000007
-
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
@@ -229,11 +225,52 @@ O(2^n) = 24
 */
 
 /*
-
+5 6
+4 1
+4 2
+4 3
+2 5
+1 2
+1 5
 */
+
+int n,m;
+
+umap<int,vi> edges;
+int colors[101] = {0};
+
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+
+	setIO("revegetate");
+
+    cin >> n >> m;
+
+    int token1, token2;
+    rep(m){
+        cin >> token1 >> token2;
+        edges[token1].pb(token2);
+        edges[token2].pb(token1);
+    }
+
+    uset<int> used;
+
+    for (int i = 1; i <= n; i++){
+        if (colors[i] != 0) continue;
+
+        used.clear();
+        for (auto &e : edges[i]) if (colors[e] != 0) used.insert(colors[e]);
+
+        for (int j = 1; j<=4; j++){
+            if (used.find(j) == used.end()){
+                colors[i] = j;
+                break;
+            }
+        }
+    }
+
+    rep(n) cout << colors[i+1];
 
 
 	return 0;

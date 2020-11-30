@@ -48,10 +48,6 @@ typedef pair<ll,ll> pz;
 #define aendl "<-\n"
 #define space ' '
 #define elif else if
-
-#define MAXINT 100007
-#define MAXLL 1000000007
-
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
@@ -229,12 +225,115 @@ O(2^n) = 24
 */
 
 /*
+4
+2 5 6 8
+*/
+
+/*
+0 10 100 1010
+we want the the minimum distance between two bits of the same index
+
+1,2,4,6,20
+
+00001, 00010, 00100, 00110, 10100
+
 
 */
+
+struct ms {
+    int st;
+    int en;
+    int len;
+
+    ms(){}
+    ms(int a, int b) :
+    st(a),
+    en(b){
+        len = en - st;
+    }
+};
+
+int n;
+vector< bitset<30> > arr;
+vector<ll> tarr;
+
+// i want to store the index, the length
+vector< ms > indexlen;
+
+ll solve(){
+    if (indexlen.empty()) return -1;
+
+    ll ff;
+    for (auto &pos : indexlen){
+        if (pos.len == n-1) continue;
+
+        ff = tarr[pos.st];
+        for (int i = pos.st+1; i<=pos.en; i++){
+            ff ^= tarr[i];
+        }
+
+        if (pos.st == 0) if (ff > tarr[1]) return pos.len;
+        elif (pos.en == n-1) if (ff < tarr[n-2]) return pos.len;
+        else if (ff < tarr[pos.st-1] || ff > tarr[pos.en+1]) return pos.len;
+    }
+
+    return -1;
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	// setIO("xorgun");
+
+    cin >> n;
+
+    ll token;
+    rep(n){
+        cin >> token;
+        arr.pb(bitset<30>(token));
+        tarr.pb(token);
+    }
+
+    int last;
+
+    for (int bitind = 0; bitind < 30; bitind++){
+        last = -1;
+        for (int ind = 0; ind < n; ind++){
+
+            if (arr[ind][bitind] == 1){
+                if (last == -1) last = ind;
+                else {
+                    indexlen.pb(ms(last, ind));
+                    last = ind;
+                }
+
+            }
+        }
+    }
+
+    // loop through everyrhing
+    // first i loop through every comb, findind the minlens, and check if they work
+    sort (indexlen.begin(), indexlen.end(), [](ms a, ms b){
+        if (a.len < b.len) return true;
+        else return false;
+    });
+
+    // now i check from all of them
+    ll ans = solve();
+
+    if (ans != -1) cout << ans;
+    else {
+        // brute force everything
+
+        for (int i=0;i<n-2;i++){
+            if (tarr[i] < (tarr[i+1] ^ tarr[i+2])){
+                ans = 1;
+                break;
+            }
+        }
+
+        cout << ans;
+    }
 
 	return 0;
 }

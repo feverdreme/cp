@@ -55,7 +55,7 @@ typedef pair<ll,ll> pz;
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
-#define disp(n) for(auto& i:n) cout<<i<<space
+#define disp(n) for(auto i:n) cout<<i<<' '
 
 template<class T>
 class dsu{
@@ -229,11 +229,101 @@ O(2^n) = 24
 */
 
 /*
-
+4 3
+1100
+7 1 2
+5 2 3
+6 2 4
 */
+
+int n, t;
+string cows;
+vec<bool> bcows;
+
+struct itr {
+    int t, a, b;
+    itr(){}
+    // itr(int t,a,b) : t(t), a(a), b(b){}
+};
+
+vec<itr> itrs;
+
+bool simulate(int p, int K){
+    vec<bool> st (n,false);
+    st[p] = true;
+    vi sh (n,K);
+
+    int past1, past2;
+
+    for (auto &i : itrs){
+        int a = i.a-1;
+        int b = i.b-1;
+
+        if (st[a] || st[b]){
+            past1 = st[a];
+            past2 = st[b];
+
+            if (sh[a] > 0) st[b] = true;
+            if (sh[b] > 0) st[a] = true;
+
+            if (past1 == true) sh[a]--;
+            if (past2 == true) sh[b]--;
+        }
+    }
+    
+    for (int ind=0; ind<n; ind++) if (st[ind] != bcows[ind]) return false;
+
+    return true;
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+
+	setIO("tracing");
+
+    cin >> n >> t >> cows;
+    for (auto &i : cows) bcows.pb((i == '1'));
+    itrs.resize(t);
+
+    rep(t) cin >> itrs[i].t >> itrs[i].a >> itrs[i].b;
+    sort(itrs.begin(), itrs.end(), [](itr a, itr b){
+        if (a.t < b.t) return true;
+        else return false;
+    });
+
+    // count how many times there is an a or b
+
+    // brute force all possible pat0s
+    // then brute fore all possilbe K's
+
+    int mink = MAXINT;
+    int maxk = 0;
+    int pat0num = 0;
+
+    bool works;
+    for (int pat0=0; pat0<n; pat0++){
+        works = false;
+
+        for (int K=0; K<= t+1; K++){
+            if (!simulate(pat0, K)) continue;
+
+            Min(mink, K);
+            Max(maxk, K);
+            works = true;
+        }
+
+        // if K = t+1 then thats our thing
+        if (works) pat0num++;
+    }
+
+    cout << pat0num << sp << mink << sp;
+
+    if (maxk == t+1) cout << "Infinity";
+    else cout << maxk;
+
+    cout << endl;
+
+    // cout << simulate(1,2) << endl;
 
 
 	return 0;

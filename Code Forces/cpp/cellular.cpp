@@ -48,10 +48,6 @@ typedef pair<ll,ll> pz;
 #define aendl "<-\n"
 #define space ' '
 #define elif else if
-
-#define MAXINT 100007
-#define MAXLL 1000000007
-
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
@@ -229,12 +225,94 @@ O(2^n) = 24
 */
 
 /*
-
+3 2
+-2 2 4
+-3 0
 */
+
+int n,m;
+vll cities; // n
+vll towers; // m
+
+bool check(ll rr){
+    int city = 0;
+    int tower = -1;
+
+    if (towers[0] - rr > cities[0]) return false;
+
+    // find the closest tower with binary search
+    int l = 0;
+    int r = m - 1;
+    int mid;
+
+    while (l <= r){
+        mid = (l + r)/2;
+
+        if (abs(towers[mid] - cities[0]) <= rr){
+            tower = mid;
+            break;
+        } else if (towers[mid] > cities[0]){
+            r = mid-1;
+        } else if (towers[mid] < cities[0]){
+            l = mid+1;
+        }
+    }
+
+    if (tower == -1) return false;
+
+    ll currtower;
+    ll currcity;
+    while (true){
+        if (tower == m) return false;
+        currcity = cities[city];
+        currtower = towers[tower];
+
+        if (abs(currcity - currtower) > rr){
+            if (currtower < currcity){
+                tower++;
+                continue;
+            } else if (currtower > currcity){
+                return false;
+            }
+        } else city++;
+
+        if (city == n) return true;
+    }
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
 
+	// setIO("cellular");
+
+    cin >> n >> m;
+    cities.resize(n);
+    towers.resize(m);
+
+    rep(n) cin >> cities[i];
+    rep(m) cin >> towers[i];
+
+    sort(cities.begin(), cities.end());
+    sort(towers.begin(), towers.end());
+
+    // binary search the r
+    ll l = 0;
+    ll r = 1e9;
+    ll mid;
+    ll ans;
+
+    while (l <= r){
+        mid = (l + r) / 2;
+
+        if (check(mid)){
+            ans = mid;
+            r = mid-1;
+        } else {
+            l = mid+1;
+        }
+    }
+
+    cout << ans;
 
 	return 0;
 }

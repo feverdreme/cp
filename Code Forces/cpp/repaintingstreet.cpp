@@ -48,10 +48,6 @@ typedef pair<ll,ll> pz;
 #define aendl "<-\n"
 #define space ' '
 #define elif else if
-
-#define MAXINT 100007
-#define MAXLL 1000000007
-
 // #define cout cout<<
 #define cint(n) int n;cin>>n;
 #define dispbr(n) for(auto& i:n) cout<<i<<endl;
@@ -229,11 +225,73 @@ O(2^n) = 24
 */
 
 /*
-
+3
+10 2
+1 1 2 2 1 1 2 2 2 1
+7 1
+1 2 3 4 5 6 7
+10 3
+1 3 3 3 3 1 2 1 3 3
 */
+
+int t;
+int n,k;
+vi arr;
+uset<int> colors;
+
+int myfind(int color, int st, int en){
+    if (st >= en) return -1;
+    for (int i=st; i<en; i++){
+        if (arr[i] != color) return i;
+    }
+
+    return -1;
+}
+
+ll findmoves(int color){
+    // i find the first disrecrptancy
+    int needed = 0;
+    int st = myfind(color, 0, n);
+    // cout << st << endl;
+
+    while (st != -1){
+        needed++;
+        
+        st = myfind(color, st+k, n);
+        // cout << st << endl;
+    }
+
+    return needed;
+}
 
 int main() {
 	std::ios_base::sync_with_stdio(false);cin.tie(0);
+
+	// setIO("repaintingstreet.cpp");
+
+    cin >> t;
+    while(t--){
+        cin >> n >> k;
+        colors.clear();
+        arr.clear();
+
+        int token;
+
+        rep(n){
+            cin >> token;
+            arr.pb(token);
+            colors.insert(token);
+        }
+
+        // i can try to find out how many it takes to paint something to one color, then i max it all
+        ll maxx = 1e9;
+        for (auto &c : colors){
+            maxx = min(maxx, findmoves(c));
+            // cout << findmoves(c) << sp << c << sp << t << aendl;
+        }
+
+        cout << maxx << endl;
+    }
 
 
 	return 0;
