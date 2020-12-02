@@ -288,62 +288,71 @@ O(2^n) = 24
 */
 
 /*
-5 1
-P
-P
-H
-P
-S
+3
+5 9
+1 4
+3 7
 */
 
-int n,k;
-vi moves;
-int dp[100001][3][21] {0};
+struct st {
+    ll ttime;
+    bool isin;
+    int ind;
+    st(){}
+    st(ll a, bool b, int c) : ttime(a), isin(b), ind(c){}
+};
 
 int main()
 {
     std::ios_base::sync_with_stdio(false);cin.tie(0);
 
-	setIO("hps");
+	// setIO("lifeguards");
 
-    // scanf("%d %d", &n, &k);
-    cin >> n >> k;
+    int n;
+    cin >> n;
 
-    char token;
+    ll t1, t2;
+    vec<st> arr;
     rep(n){
-        cin >> token;
-        if (token == 'H') moves.pb(1);
-        elif (token == 'P') moves.pb(2);
-        elif (token == 'S') moves.pb(0);
+        cin >> t1 >> t2;
+        arr.pb(st(t1, true, i));
+        arr.pb(st(t2, false, i));
     }
 
-    for (int move=0; move<=n; move++){
-        for (int laststate=0; laststate<3; laststate++){
-            for (int K=0; K<=k; K++){
-                // after "move" moves whats the score
-                // the amount youre going to have changed
-                if (move == 0) dp[0][laststate][K] = 0;
-                else {
-                    if (K == 0) dp[move][laststate][0] = dp[move-1][laststate][0] + (laststate == moves[move-1] ? 1 : 0);
-                    else {
-                        dp[move][laststate][K] = max({
-                        dp[move-1][laststate][K] + (laststate == moves[move-1] ? 1 : 0),
-                        dp[move-1][(laststate+1) % 3][K-1] + ((laststate+1) % 3 == moves[move-1] ? 1 : 0),
-                        dp[move-1][(laststate+2) % 3][K-1] + ((laststate+2) % 3 == moves[move-1] ? 1 : 0)
-                    });
-                    }
-                }
-            }
-        }
-    }
-
-    int ans = max({
-        *max_element(begin(dp[n][0]), end(dp[n][0])),
-        *max_element(begin(dp[n][1]), end(dp[n][1])),
-        *max_element(begin(dp[n][2]), end(dp[n][2]))
+    sort(arr.begin(), arr.end(), [](st a, st b){
+        if (a.ttime < b.ttime) return true;
+        else return false;
     });
 
-    cout << ans;
+    ll maxx = 0;
+
+    F0R(skip,n){
+        int covered = 0;
+        ll tttime = 0;
+        ll past = -1;
+        F0R(i,2*n){
+            st curr = arr[i];
+            // printf("covered: %d, skip: %d, ind: %d, val: %d\n", covered, skip, curr.ind, curr.ttime);
+
+            if (curr.ind == skip){
+                if (covered > 0) tttime += (curr.ttime - past);
+                continue;
+            }
+
+            if (past == -1) past = curr.ttime;
+
+            if (curr.isin) covered++;
+            if (covered > 0){
+                tttime += (curr.ttime - past);
+            }
+            if (!curr.isin) covered--;
+            past = curr.ttime;
+        }
+
+        Max(maxx, tttime);
+    }
+
+    cout << maxx;
 
 	return 0;
 }
