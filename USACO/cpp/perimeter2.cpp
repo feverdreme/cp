@@ -24,7 +24,6 @@ typedef pair<ll,ll> pz;
 #define vec vector
 #define uset unordered_set
 #define umap unordered_map
-#define usetpii unordered_set<pair<int, int> , hash_pair>
 #define pb push_back
 #define pub push_back
 #define pob pop_back
@@ -174,27 +173,6 @@ vec<T> find_all(InputIterator first, InputIterator last, const T& val){
 	return inds;
 }
 
-template <class T>
-bool in_set(uset<T> &s, const T &k)
-{
-    return (s.find(k) != s.end());
-}
-template <class T>
-bool in_set(uset<T> &s, const T k)
-{
-    return (s.find(k) != s.end());
-}
-template <class T>
-bool in_set(set<T> &s, const T &k)
-{
-    return (s.find(k) != s.end());
-}
-template <class T>
-bool in_set(set<T> &s, const T k)
-{
-    return (s.find(k) != s.end());
-}
-
 // to hash the stl's
 // from geeksforgeeks
 struct hash_pair
@@ -310,12 +288,27 @@ O(2^n) = 24
 */
 
 /*
-
+6
+##....
+....#.
+.#..#.
+.#####
+...###
+....##
 */
+
+int n;
+char arr[1000][1000];
+int id[1000][1000];
+int perim[1000];
 
 int main()
 {
     std::ios_base::sync_with_stdio(false);cin.tie(0);
+
+	// setIO("perimeter");
+
+    int n = 5;
 
 
 	return 0;

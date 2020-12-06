@@ -323,33 +323,34 @@ int n2;
 char arr[1000][1000];
 
 uset<pii, hash_pair> notseen;
-uset<pii, hash_pair> creams;
+uset<pii, hash_pair> seen;
 vec< uset<pii, hash_pair> > blobs;
 
 void flood_fill(pii cell){
-    queue<pii> que;
-    que.push(cell);
+    stack<pii> stk;
+    stk.push(cell);
     unordered_set<pii, hash_pair> visited;
 
     pii curr;
-    while (!que.empty()){ // while not empty
-        curr = que.front();
+    while (!stk.empty()){ // while not empty
+        curr = stk.top();
         visited.insert(curr);
+        seen.insert(curr);
         notseen.erase(curr);
-        que.pop();
+        stk.pop();
         
         int x = curr.f;
         int y = curr.s;
 
-        bool b1 = x > 0 && arr[x-1][y] == '#' && in_set(notseen, {x-1, y});
-        bool b2 = x < n-1 && arr[x+1][y] == '#' && in_set(notseen, {x+1, y});
-        bool b3 = y > 0 && arr[x][y-1] == '#' && in_set(notseen, {x, y-1});
-        bool b4 = y < n-1 && arr[x][y+1] == '#' && in_set(notseen, {x, y+1});
+        bool b1 = x > 0 && arr[x-1][y] == '#' && !in_set(seen, {x-1, y});
+        bool b2 = x < n-1 && arr[x+1][y] == '#' && !in_set(seen, {x+1, y});
+        bool b3 = y > 0 && arr[x][y-1] == '#' && !in_set(seen, {x, y-1});
+        bool b4 = y < n-1 && arr[x][y+1] == '#' && !in_set(seen, {x, y+1});
 
-        if (b1) que.push({x-1, y});
-        if (b2) que.push({x+1, y});
-        if (b3) que.push({x, y-1});
-        if (b4) que.push({x, y+1});
+        if (b1) stk.push({x-1, y});
+        if (b2) stk.push({x+1, y});
+        if (b3) stk.push({x, y-1});
+        if (b4) stk.push({x, y+1});
     }
     
     blobs.pb(visited);
@@ -361,7 +362,6 @@ pii blobify(uset<pii, hash_pair> blob){
 
     int perim = 0;
     // get all whitespace
-    uset<pii, hash_pair> whitesp;
 
     for (auto &cell : blob){
         int x = cell.f;
@@ -372,15 +372,23 @@ pii blobify(uset<pii, hash_pair> blob){
         bool b3 = y > 0 && arr[x][y - 1] == '.';
         bool b4 = y < n - 1 && arr[x][y + 1] == '.';
 
-        if (b1) whitesp
+        bool b5 = x == 0;
+        bool b6 = y == 0;
+        bool b7 = x == n-1;
+        bool b8 = y == n-1;
+
+        perim += b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8;
+        // printf("%d %d %d %d\n", b5, b6, b7, b8);
     }
+
+    return mp(area, perim);
 }
 
 int main()
 {
     std::ios_base::sync_with_stdio(false);cin.tie(0);
 
-	// setIO("perimeter");
+	setIO("perimeter");
 
     cin >> n;
     n2 = n*n;
@@ -392,7 +400,7 @@ int main()
 
         if (token == '#'){
             notseen.insert({i,j});
-            creams.insert({i,j});
+            // creams.insert({i,j});
         }
     }
 
@@ -406,10 +414,14 @@ int main()
     // iterate through every blob
     for (auto &blob : blobs){
         pii curr = blobify(blob);
+        // cout << curr.f << sp << curr.s << endl;
 
         if (curr.f > maxblob.f) maxblob = curr;
-        elif (curr.f = maxblob.f && curr.s < maxblob.s) maxblob = curr;
+        else if (curr.f == maxblob.f && curr.s < maxblob.s) maxblob = curr;
     }
+
+    cout << maxblob.f << sp << maxblob.s;
+    // cout << 13 << sp << 22;
 
 	return 0;
 }
