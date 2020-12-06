@@ -173,6 +173,23 @@ vec<T> find_all(InputIterator first, InputIterator last, const T& val){
 	return inds;
 }
 
+template<class T>
+bool in_set (uset<T> &s, const T &k){
+    return (s.find(k) != s.end());
+}
+template<class T>
+bool in_set (uset<T> &s, const T k){
+    return (s.find(k) != s.end());
+}
+template<class T>
+bool in_set(set<T> &s, const T &k){
+    return (s.find(k) != s.end());
+}
+template <class T>
+bool in_set(set<T> &s, const T k){
+    return (s.find(k) != s.end());
+}
+
 // to hash the stl's
 // from geeksforgeeks
 struct hash_pair
@@ -297,38 +314,66 @@ O(2^n) = 24
 ....##
 */
 
+bool in_set (uset<pii, hash_pair> &s, const pii k){
+    return s.find(k) != s.end();
+}
+
 int n;
 int n2;
-int creamcount = 0;
 char arr[1000][1000];
-uset<pii, hash_pair> unseen;
-uset<pii, hash_pair> seen;
+
+uset<pii, hash_pair> notseen;
+uset<pii, hash_pair> creams;
 vec< uset<pii, hash_pair> > blobs;
 
 void flood_fill(pii cell){
-    uset<pii, hash_pair> blob;
-
-    // if (arr[cell.f][cell.s] != '#') return;
-
     queue<pii> que;
     que.push(cell);
+    unordered_set<pii, hash_pair> visited;
 
     pii curr;
     while (!que.empty()){ // while not empty
         curr = que.front();
-        blob.insert(curr);
-        unseen.erase(curr);
-        seen.insert(curr);
+        visited.insert(curr);
+        notseen.erase(curr);
         que.pop();
         
-        int x = curr.f, y = curr.s;
-        if (x > 0 && unseen.find({x-1, y}) == unseen.end() && arr[x-1][y] == '#') que.push({x-1, y});
-        if (x < n-1 && unseen.find({x+1, y}) == unseen.end() && arr[x+1][y] == '#') que.push({x+1, y});
-        if (y > 0 && unseen.find({x, y-1}) == unseen.end() && arr[x][y-1] == '#') que.push({x, y-1});
-        if (y < n - 1 && unseen.find({x, y+1}) == unseen.end() && arr[x][y+1] == '#') que.push({x, y+1});
+        int x = curr.f;
+        int y = curr.s;
+
+        bool b1 = x > 0 && arr[x-1][y] == '#' && in_set(notseen, {x-1, y});
+        bool b2 = x < n-1 && arr[x+1][y] == '#' && in_set(notseen, {x+1, y});
+        bool b3 = y > 0 && arr[x][y-1] == '#' && in_set(notseen, {x, y-1});
+        bool b4 = y < n-1 && arr[x][y+1] == '#' && in_set(notseen, {x, y+1});
+
+        if (b1) que.push({x-1, y});
+        if (b2) que.push({x+1, y});
+        if (b3) que.push({x, y-1});
+        if (b4) que.push({x, y+1});
     }
     
-    blobs.pb(blob);
+    blobs.pb(visited);
+}
+
+pii blobify(uset<pii, hash_pair> blob){
+    // get area
+    int area = blob.size();
+
+    int perim = 0;
+    // get all whitespace
+    uset<pii, hash_pair> whitesp;
+
+    for (auto &cell : blob){
+        int x = cell.f;
+        int y = cell.s;
+
+        bool b1 = x > 0 && arr[x - 1][y] == '.';
+        bool b2 = x < n - 1 && arr[x + 1][y] == '.';
+        bool b3 = y > 0 && arr[x][y - 1] == '.';
+        bool b4 = y < n - 1 && arr[x][y + 1] == '.';
+
+        if (b1) whitesp
+    }
 }
 
 int main()
@@ -338,26 +383,33 @@ int main()
 	// setIO("perimeter");
 
     cin >> n;
-    n2 = n * n;
+    n2 = n*n;
 
     char token;
     F0R(i,n) F0R(j,n) {
         cin >> token;
-
         arr[i][j] = token;
 
         if (token == '#'){
-            creamcount++;
-            unseen.insert({i, j});
+            notseen.insert({i,j});
+            creams.insert({i,j});
         }
     }
 
-    // flood fill
-    while (seen.size() != creamcount){
-        flood_fill(*unseen.begin());
+    while(!notseen.empty()){
+        flood_fill(*notseen.begin());
+        // break;
     }
 
-    cout << blobs.size();
+    pii maxblob = {-1,-1};
+
+    // iterate through every blob
+    for (auto &blob : blobs){
+        pii curr = blobify(blob);
+
+        if (curr.f > maxblob.f) maxblob = curr;
+        elif (curr.f = maxblob.f && curr.s < maxblob.s) maxblob = curr;
+    }
 
 	return 0;
 }
