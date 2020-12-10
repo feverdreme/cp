@@ -10,7 +10,7 @@ args = parser.parse_args()
 
 f = ""
 
-cmd(f"cp ~/Documents/GitHub/cp/template.cpp {args.filename}.cpp")
+cmd(f"cp ~/OneDrive/Documents/GitHub/cp/template.cpp {args.filename}.cpp")
 
 ofile = args.filename if not args.output else args.output
 
