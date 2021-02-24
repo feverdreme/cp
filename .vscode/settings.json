@@ -1,7 +1,25 @@
 {
     "files.associations": {
         "*.tcc": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "deque": "cpp",
+        "exception": "cpp",
+        "filesystem": "cpp",
+        "forward_list": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "future": "cpp",
+        "istream": "cpp",
+        "locale": "cpp",
+        "map": "cpp",
+        "memory": "cpp",
+        "new": "cpp",
+        "ostream": "cpp",
+        "random": "cpp",
+        "regex": "cpp",
+        "scoped_allocator": "cpp",
+        "string": "cpp",
+        "utility": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
