@@ -310,75 +310,66 @@ O(2^n) = 24
 */
 
 /*
-3 6
-1 1 1 2
-2 1 2 2
-1 1 1 3
-2 3 3 1
-1 3 1 2
-1 3 2 1
+3
+4
+1 4 3 2
+2
+1 2
+3
+1 2 3
 */
 
-int n,m;
-bool arr[101][101];
-umap<pii,vec<pii>,hash_pair> switches;
-uset<pii,hash_pair> seen;
+int t, n;
 
-void dfs(pii curr){
-    seen.insert(curr);
+void solve(){
+    cin >> n;
 
-    int x = curr.f;
-    int y = curr.s;
-    arr[x][y] = true;
+    vi arr (n);
+    rep(n) cin >> arr[i];
+    
+    // shit this is gonna be hard
+    vi tree (n,0);
+    tree[1] = 1;
+    tree[0] = 1;
 
-    // check for switches
-    if (switches[curr].size() != 0){
-        for (auto &p : switches[curr]) arr[p.f][p.s] = true;
+    int currdepth = 1;
 
-        for (auto &p : switches[curr])
-        {
-            if (p.f > 1 && arr[p.f - 1][p.s] && seen.find(p) == seen.end()) dfs(p);
-            elif (p.f < n && arr[p.f + 1][p.s] && seen.find(p) == seen.end()) dfs(p);
-            elif (p.s > 1 && arr[p.f][p.s - 1] && seen.find(p) == seen.end()) dfs(p);
-            elif (p.s < n && arr[p.f][p.s + 1] && seen.find(p) == seen.end()) dfs(p);
+    int past = arr[1];
+
+    for (int i=2; i<n; i++){
+        if (past != -1){
+            if (arr[i] > past){
+                past = arr[i];
+                tree[currdepth]++;
+            } else {
+                if (tree[currdepth - 1] != 0){
+                    tree[currdepth]--;
+                    tree[currdepth]++;
+                } else {
+                    currdepth++;
+                    tree[currdepth] = 1;
+                }
+
+                past = -1;
+            }
+        } else {
+            past = arr[i];
+            tree[currdepth]++;
         }
     }
 
-    // check all adj elements
-    if (x > 1 && arr[x - 1][y] && seen.find({x - 1, y}) == seen.end())
-        dfs({x - 1, y});
-    if (x < n && arr[x + 1][y] && seen.find({x + 1, y}) == seen.end())
-        dfs({x + 1, y});
-    if (y > 1 && arr[x][y - 1] && seen.find({x, y - 1}) == seen.end())
-        dfs({x, y - 1});
-    if (y < n && arr[x][y + 1] && seen.find({x, y + 1}) == seen.end())
-        dfs({x, y + 1});
-
+    cout << currdepth << '\n';
 }
 
 int main()
 {
     std::ios_base::sync_with_stdio(false);cin.tie(0);
 
-	// setIO("lightson");
+	// setIO("minimalheighttree");
 
-    cin >> n >> m;
-    arr[1][1] = true;
-
-    int a,b,c,d;
-    rep(m){
-        cin >> a >> b >> c >> d;
-        switches[{a,b}].pb({c,d});
-    }
-
-    // set of visited
-    // set of blocks to find
-    dfs({1,1});
-    cout << seen.size() << endl;
-
-    FOR(i,1,n+1){
-        FOR(j,1,n+1) cout << arr[i][j] << sp;
-        cout << endl;
+    cin >> t;
+    while(t--){
+        solve();
     }
 
 	return 0;
